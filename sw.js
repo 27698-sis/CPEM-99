@@ -3,7 +3,7 @@ const ASSETS = [
   '/CPEM-99/',
   '/CPEM-99/index.html',
   '/CPEM-99/manifest.json',
-  '/CPEM-99/cpem101.png'
+  '/CPEM-99/CPEM99.png'
 ];
 
 self.addEventListener('install', (event) => {
