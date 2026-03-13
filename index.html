@@ -7,15 +7,13 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
   <title>CPEM N° 99 — Paso Aguerre</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --earth:      #3B1F14;
       --earth-mid:  #5C2E1A;
@@ -29,672 +27,128 @@
       --text-on-dark: #F5EFE0;
       --text-muted:   #C4A882;
     }
+    html, body { height: 100%; background: var(--earth); font-family: 'Nunito', sans-serif; overflow: hidden; }
+    .app-frame { position: relative; width: 100%; max-width: 420px; height: 100vh; margin: 0 auto; overflow: hidden; }
+    .geo-pattern { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.08; pointer-events: none; }
+    .screen { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity 0.9s ease, transform 0.9s ease; }
+    .screen.hidden { opacity: 0; pointer-events: none; transform: scale(1.04); }
 
-    html, body {
-      height: 100%;
-      background: var(--earth);
-      font-family: 'Nunito', sans-serif;
-      overflow: hidden;
-    }
+    /* SPLASH */
+    #splash { background: linear-gradient(170deg, #3B1F14 0%, #5C2E1A 45%, #2E4040 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 32px; text-align: center; }
+    .splash-star { margin-bottom: 28px; animation: star-spin 24s linear infinite; }
+    @keyframes star-spin { to { transform: rotate(360deg); } }
+    .splash-shield { width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--ocre); display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 30px; background: rgba(58,30,20,0.6); box-shadow: 0 0 0 6px rgba(196,136,59,0.15), 0 0 0 12px rgba(196,136,59,0.07); animation: shield-fade 1.4s ease forwards; opacity: 0; }
+    @keyframes shield-fade { from { opacity: 0; transform: scale(0.88); } to { opacity: 1; transform: scale(1); } }
+    .shield-inner { font-family: 'Cinzel', serif; font-size: 38px; font-weight: 700; color: var(--ocre); letter-spacing: -1px; line-height: 1; text-align: center; }
+    .shield-inner span { display: block; font-size: 11px; letter-spacing: 1.5px; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
+    .splash-institution { font-family: 'Cinzel', serif; color: var(--cream); font-size: 15px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 6px; opacity: 0; animation: fade-up 0.8s ease 0.5s forwards; }
+    .splash-location { font-family: 'Nunito', sans-serif; color: var(--text-muted); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 44px; opacity: 0; animation: fade-up 0.8s ease 0.7s forwards; }
+    .splash-quote-wrap { position: relative; max-width: 300px; opacity: 0; animation: fade-up 0.9s ease 1s forwards; }
+    .splash-quote-mark { font-family: 'Lora', serif; font-size: 72px; line-height: 0.5; color: var(--ocre); opacity: 0.55; display: block; margin-bottom: -10px; }
+    .splash-quote { font-family: 'Lora', serif; font-style: italic; font-size: 17px; line-height: 1.65; color: var(--cream); text-align: center; }
+    .splash-quote-line { display: block; width: 42px; height: 2px; background: var(--ocre); margin: 20px auto 0; border-radius: 2px; }
+    .splash-loader { position: absolute; bottom: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, var(--turquoise), var(--ocre)); border-radius: 0 2px 2px 0; animation: load-bar 3s ease forwards; }
+    @keyframes load-bar { 0% { width: 0%; } 70% { width: 85%; } 95% { width: 97%; } 100% { width: 100%; } }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ─── SHARED FRAME ─── */
-    .app-frame {
-      position: relative;
-      width: 100%;
-      max-width: 420px;
-      height: 100vh;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-
-    /* ─── GEOMETRIC PATTERN SVG ─── */
-    .geo-pattern {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.08;
-      pointer-events: none;
-    }
-
-    /* ─── SCREENS ─── */
-    .screen {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      transition: opacity 0.9s ease, transform 0.9s ease;
-    }
-    .screen.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(1.04);
-    }
-
-    /* ══════════════════════════════════════
-       SPLASH SCREEN
-    ══════════════════════════════════════ */
-    #splash {
-      background: linear-gradient(170deg, #3B1F14 0%, #5C2E1A 45%, #2E4040 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 32px;
-      text-align: center;
-    }
-
-    /* Decorative Mapuche star top */
-    .splash-star {
-      margin-bottom: 28px;
-      animation: star-spin 24s linear infinite;
-    }
-    @keyframes star-spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .splash-shield {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      border: 2px solid var(--ocre);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      margin-bottom: 30px;
-      background: rgba(58,30,20,0.6);
-      box-shadow: 0 0 0 6px rgba(196,136,59,0.15), 0 0 0 12px rgba(196,136,59,0.07);
-      animation: shield-fade 1.4s ease forwards;
-      opacity: 0;
-    }
-    @keyframes shield-fade {
-      from { opacity: 0; transform: scale(0.88); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-
-    .shield-inner {
-      font-family: 'Cinzel', serif;
-      font-size: 38px;
-      font-weight: 700;
-      color: var(--ocre);
-      letter-spacing: -1px;
-      line-height: 1;
-      text-align: center;
-    }
-    .shield-inner span {
-      display: block;
-      font-size: 11px;
-      letter-spacing: 1.5px;
-      color: var(--text-muted);
-      font-weight: 400;
-      margin-top: 2px;
-    }
-
-    .splash-institution {
-      font-family: 'Cinzel', serif;
-      color: var(--cream);
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      opacity: 0;
-      animation: fade-up 0.8s ease 0.5s forwards;
-    }
-    .splash-location {
-      font-family: 'Nunito', sans-serif;
-      color: var(--text-muted);
-      font-size: 12px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 44px;
-      opacity: 0;
-      animation: fade-up 0.8s ease 0.7s forwards;
-    }
-
-    /* Quote */
-    .splash-quote-wrap {
-      position: relative;
-      max-width: 300px;
-      opacity: 0;
-      animation: fade-up 0.9s ease 1s forwards;
-    }
-    .splash-quote-mark {
-      font-family: 'Lora', serif;
-      font-size: 72px;
-      line-height: 0.5;
-      color: var(--ocre);
-      opacity: 0.55;
-      display: block;
-      margin-bottom: -10px;
-    }
-    .splash-quote {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 17px;
-      line-height: 1.65;
-      color: var(--cream);
-      text-align: center;
-    }
-    .splash-quote-line {
-      display: block;
-      width: 42px;
-      height: 2px;
-      background: var(--ocre);
-      margin: 20px auto 0;
-      border-radius: 2px;
-    }
-
-    /* Loader bar */
-    .splash-loader {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 3px;
-      width: 0%;
-      background: linear-gradient(90deg, var(--turquoise), var(--ocre));
-      border-radius: 0 2px 2px 0;
-      animation: load-bar 3s ease forwards;
-    }
-    @keyframes load-bar {
-      0%   { width: 0%; }
-      70%  { width: 85%; }
-      95%  { width: 97%; }
-      100% { width: 100%; }
-    }
-
-    @keyframes fade-up {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-
-    /* ══════════════════════════════════════
-       HOME SCREEN
-    ══════════════════════════════════════ */
-    #home {
-      background: #F2EBD9;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
+    /* HOME */
+    #home { background: #F2EBD9; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
     #home::-webkit-scrollbar { display: none; }
-
-    /* Header */
-    .home-header {
-      background: linear-gradient(155deg, #3B1F14 0%, #5C2E1A 55%, #2E4040 100%);
-      padding: 52px 24px 24px;
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .home-header .geo-bg {
-      position: absolute;
-      inset: 0;
-      opacity: 0.06;
-      pointer-events: none;
-    }
-
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 22px;
-    }
-    .header-logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .header-logo-circle {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 1.5px solid var(--ocre);
-      background: rgba(58,30,20,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 0 4px rgba(196,136,59,0.12);
-      flex-shrink: 0;
-    }
-    .header-logo-circle svg { width: 28px; height: 28px; }
-
+    .home-header { background: linear-gradient(155deg, #3B1F14 0%, #5C2E1A 55%, #2E4040 100%); padding: 52px 24px 24px; position: relative; overflow: hidden; flex-shrink: 0; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+    .header-logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .header-logo-circle { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--ocre); background: rgba(58,30,20,0.5); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 4px rgba(196,136,59,0.12); flex-shrink: 0; }
     .header-title-block { line-height: 1.15; }
-    .header-cpem {
-      font-family: 'Cinzel', serif;
-      font-size: 11px;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      display: block;
-      text-transform: uppercase;
-    }
-    .header-name {
-      font-family: 'Cinzel', serif;
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--cream);
-      display: block;
-    }
-    .header-location {
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.8px;
-      display: block;
-    }
+    .header-cpem { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; color: var(--text-muted); display: block; text-transform: uppercase; }
+    .header-name { font-family: 'Cinzel', serif; font-size: 17px; font-weight: 700; color: var(--cream); display: block; }
+    .header-location { font-size: 11px; color: var(--text-muted); letter-spacing: 0.8px; display: block; }
+    .header-bell { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(196,136,59,0.3); display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); position: relative; cursor: pointer; }
+    .bell-dot { position: absolute; top: 7px; right: 8px; width: 7px; height: 7px; border-radius: 50%; background: var(--terracota); border: 1.5px solid #3B1F14; }
+    .header-greeting { background: rgba(255,255,255,0.07); border-radius: 12px; padding: 14px 16px; border: 1px solid rgba(196,136,59,0.18); }
+    .greeting-line1 { font-family: 'Lora', serif; font-style: italic; font-size: 13px; color: var(--text-muted); margin-bottom: 2px; }
+    .greeting-line2 { font-family: 'Cinzel', serif; font-size: 15px; color: var(--cream); letter-spacing: 0.5px; }
+    .home-body { padding: 22px 18px 90px; flex: 1; }
+    .section-label { font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--terracota); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(160,69,48,0.3), transparent); }
 
-    /* Header notification bell */
-    .header-bell {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid rgba(196,136,59,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.06);
-      position: relative;
-      cursor: pointer;
-    }
-    .bell-dot {
-      position: absolute;
-      top: 7px;
-      right: 8px;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--terracota);
-      border: 1.5px solid #3B1F14;
-    }
+    /* Install card */
+    .install-card { background: linear-gradient(135deg, #3B1F14 0%, #5C2E1A 100%); border-radius: 16px; padding: 18px 18px 16px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; border: 1px solid rgba(196,136,59,0.3); }
+    .install-card.hidden { display: none; }
+    .install-card-top { display: flex; align-items: center; gap: 12px; }
+    .install-card-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(196,136,59,0.15); border: 1px solid rgba(196,136,59,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .install-card-text { flex: 1; }
+    .install-card-title { font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700; color: var(--cream); margin-bottom: 2px; }
+    .install-card-sub { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+    .install-card-close { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.08); border: none; color: var(--text-muted); font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; padding: 0; }
+    .install-card-btns { display: flex; gap: 10px; }
+    .btn-install { flex: 1; background: var(--ocre); color: var(--earth); border: none; border-radius: 10px; padding: 10px 16px; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-later { background: rgba(255,255,255,0.08); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 14px; font-family: 'Nunito', sans-serif; font-size: 12px; cursor: pointer; white-space: nowrap; }
 
-    /* Greeting */
-    .header-greeting {
-      background: rgba(255,255,255,0.07);
-      border-radius: 12px;
-      padding: 14px 16px;
-      border: 1px solid rgba(196,136,59,0.18);
-    }
-    .greeting-line1 {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-    .greeting-line2 {
-      font-family: 'Cinzel', serif;
-      font-size: 15px;
-      color: var(--cream);
-      letter-spacing: 0.5px;
-    }
-
-    /* Body content */
-    .home-body {
-      padding: 22px 18px 90px;
-      flex: 1;
-    }
-
-    /* Section title */
-    .section-label {
-      font-family: 'Nunito', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--terracota);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(160,69,48,0.3), transparent);
-    }
-
-    /* Banner card */
-    .banner-card {
-      background: linear-gradient(135deg, var(--turquoise) 0%, #1E5E5E 100%);
-      border-radius: 16px;
-      padding: 20px 20px;
-      margin-bottom: 22px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
-    }
+    /* Banner */
+    .banner-card { background: linear-gradient(135deg, var(--turquoise) 0%, #1E5E5E 100%); border-radius: 16px; padding: 20px; margin-bottom: 22px; position: relative; overflow: hidden; cursor: pointer; transition: transform 0.18s ease; }
     .banner-card:active { transform: scale(0.98); }
-    .banner-card-bg {
-      position: absolute;
-      right: -10px;
-      top: -10px;
-      opacity: 0.1;
-      pointer-events: none;
-    }
-    .banner-tag {
-      display: inline-block;
-      background: rgba(255,255,255,0.18);
-      color: rgba(255,255,255,0.9);
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-    .banner-title {
-      font-family: 'Lora', serif;
-      font-size: 17px;
-      font-weight: 500;
-      color: #fff;
-      line-height: 1.4;
-      margin-bottom: 12px;
-    }
-    .banner-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 7px 14px;
-      border-radius: 20px;
-      letter-spacing: 0.3px;
-    }
+    .banner-card-bg { position: absolute; right: -10px; top: -10px; opacity: 0.1; pointer-events: none; }
+    .banner-tag { display: inline-block; background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.9); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; font-weight: 600; }
+    .banner-title { font-family: 'Lora', serif; font-size: 17px; font-weight: 500; color: #fff; line-height: 1.4; margin-bottom: 12px; }
+    .banner-cta { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.15); color: #fff; font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 20px; }
 
-    /* Module grid */
-    .modules-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-
-    .module-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 18px 16px;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      border: 1px solid rgba(160,69,48,0.1);
-      box-shadow: 0 2px 8px rgba(59,31,20,0.07);
-      position: relative;
-      overflow: hidden;
-    }
-    .module-card:active { transform: scale(0.97); box-shadow: none; }
-    .module-card::before {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 100%;
-      height: 3px;
-    }
-    .module-card.mc-red::before    { background: var(--terracota); }
-    .module-card.mc-ocre::before   { background: var(--ocre); }
-    .module-card.mc-turq::before   { background: var(--turquoise); }
-    .module-card.mc-earth::before  { background: var(--earth-mid); }
-
-    .module-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 12px;
-    }
+    /* Modules */
+    .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
+    .module-card { background: #fff; border-radius: 14px; padding: 18px 16px; cursor: pointer; transition: transform 0.15s ease; border: 1px solid rgba(160,69,48,0.1); box-shadow: 0 2px 8px rgba(59,31,20,0.07); position: relative; overflow: hidden; }
+    .module-card:active { transform: scale(0.97); }
+    .module-card::before { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; }
+    .module-card.mc-red::before  { background: var(--terracota); }
+    .module-card.mc-ocre::before { background: var(--ocre); }
+    .module-card.mc-turq::before { background: var(--turquoise); }
+    .module-card.mc-earth::before { background: var(--earth-mid); }
+    .module-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
     .mc-red .module-icon   { background: rgba(160,69,48,0.12); }
     .mc-ocre .module-icon  { background: rgba(196,136,59,0.12); }
     .mc-turq .module-icon  { background: rgba(46,128,128,0.12); }
     .mc-earth .module-icon { background: rgba(92,46,26,0.1); }
+    .module-title { font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 700; color: var(--earth); line-height: 1.3; margin-bottom: 4px; }
+    .module-sub { font-size: 11px; color: #9A8070; line-height: 1.3; }
+    .module-badge { position: absolute; top: 12px; right: 12px; background: var(--terracota); color: #fff; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
 
-    .module-title {
-      font-family: 'Nunito', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--earth);
-      line-height: 1.3;
-      margin-bottom: 4px;
-    }
-    .module-sub {
-      font-size: 11px;
-      color: #9A8070;
-      line-height: 1.3;
-    }
-    .module-badge {
-      position: absolute;
-      top: 12px; right: 12px;
-      background: var(--terracota);
-      color: #fff;
-      font-size: 9px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 10px;
-    }
-
-    /* Recent activity row */
+    /* Activity */
     .activity-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
-    .activity-item {
-      background: #fff;
-      border-radius: 12px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      cursor: pointer;
-      box-shadow: 0 1px 5px rgba(59,31,20,0.06);
-      border: 1px solid rgba(160,69,48,0.08);
-      transition: transform 0.15s;
-    }
+    .activity-item { background: #fff; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; box-shadow: 0 1px 5px rgba(59,31,20,0.06); border: 1px solid rgba(160,69,48,0.08); transition: transform 0.15s; }
     .activity-item:active { transform: scale(0.98); }
-    .activity-dot {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+    .activity-dot { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .ad-red  { background: rgba(160,69,48,0.12); }
     .ad-turq { background: rgba(46,128,128,0.12); }
     .ad-ocre { background: rgba(196,136,59,0.12); }
     .activity-text { flex: 1; min-width: 0; }
-    .activity-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--earth);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .activity-title { font-size: 13px; font-weight: 600; color: var(--earth); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .activity-sub { font-size: 11px; color: #9A8070; margin-top: 2px; }
     .activity-arrow { color: #C4A882; font-size: 16px; flex-shrink: 0; }
 
+    /* Offline badge */
+    .offline-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(46,128,128,0.12); color: var(--turquoise); font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.5px; margin-bottom: 18px; }
+    .offline-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--turquoise); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(0.8); } }
+
     /* Bottom nav */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 420px;
-      background: #fff;
-      border-top: 1px solid rgba(160,69,48,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 10px 10px 18px;
-      z-index: 100;
-      box-shadow: 0 -4px 20px rgba(59,31,20,0.08);
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      padding: 4px 14px;
-      border-radius: 12px;
-      transition: background 0.15s;
-    }
+    .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 420px; background: #fff; border-top: 1px solid rgba(160,69,48,0.1); display: flex; align-items: center; justify-content: space-around; padding: 10px 10px 18px; z-index: 100; box-shadow: 0 -4px 20px rgba(59,31,20,0.08); }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 14px; border-radius: 12px; transition: background 0.15s; }
     .nav-item.active { background: rgba(160,69,48,0.08); }
     .nav-icon { opacity: 0.45; }
     .nav-item.active .nav-icon { opacity: 1; }
-    .nav-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      color: #9A8070;
-    }
+    .nav-label { font-size: 10px; font-weight: 600; letter-spacing: 0.3px; color: #9A8070; }
     .nav-item.active .nav-label { color: var(--terracota); }
-
-    /* Install card */
-    .install-card {
-      background: linear-gradient(135deg, #3B1F14 0%, #5C2E1A 100%);
-      border-radius: 16px;
-      padding: 18px 18px 16px;
-      margin-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      border: 1px solid rgba(196,136,59,0.3);
-      animation: fade-up 0.5s ease forwards;
-    }
-    .install-card.hidden { display: none; }
-    .install-card-top {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .install-card-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: rgba(196,136,59,0.15);
-      border: 1px solid rgba(196,136,59,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .install-card-text { flex: 1; }
-    .install-card-title {
-      font-family: 'Nunito', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--cream);
-      margin-bottom: 2px;
-    }
-    .install-card-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-    .install-card-close {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.08);
-      border: none;
-      color: var(--text-muted);
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      line-height: 1;
-      padding: 0;
-    }
-    .install-card-btns {
-      display: flex;
-      gap: 10px;
-    }
-    .btn-install {
-      flex: 1;
-      background: var(--ocre);
-      color: var(--earth);
-      border: none;
-      border-radius: 10px;
-      padding: 10px 16px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.15s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-    .btn-install:active { opacity: 0.8; }
-    .btn-later {
-      background: rgba(255,255,255,0.08);
-      color: var(--text-muted);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 12px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .btn-later:active { opacity: 0.7; }
-
-    /* Offline badge */
-    .offline-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: rgba(46,128,128,0.12);
-      color: var(--turquoise);
-      font-size: 10px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.5px;
-      margin-bottom: 18px;
-    }
-    .offline-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--turquoise);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity:1; transform:scale(1); }
-      50% { opacity:0.5; transform:scale(0.8); }
-    }
-
   </style>
 </head>
 <body>
 <div class="app-frame">
 
-  <!-- ════════════════════════════════
-       SPLASH SCREEN
-  ═══════════════════════════════════ -->
   <div class="screen" id="splash">
-
-    <!-- Mapuche geometric pattern background -->
     <svg class="geo-pattern" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <pattern id="geo" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-          <!-- Diamond -->
           <polygon points="30,2 58,30 30,58 2,30" fill="none" stroke="#F5EFE0" stroke-width="0.8"/>
-          <!-- Inner diamond -->
           <polygon points="30,12 48,30 30,48 12,30" fill="none" stroke="#C4883B" stroke-width="0.6"/>
-          <!-- Center cross -->
           <line x1="30" y1="16" x2="30" y2="44" stroke="#F5EFE0" stroke-width="0.4"/>
           <line x1="16" y1="30" x2="44" y2="30" stroke="#F5EFE0" stroke-width="0.4"/>
-          <!-- Corner dots -->
           <circle cx="30" cy="2"  r="1.5" fill="#C4883B"/>
           <circle cx="58" cy="30" r="1.5" fill="#C4883B"/>
           <circle cx="30" cy="58" r="1.5" fill="#C4883B"/>
@@ -703,49 +157,29 @@
       </defs>
       <rect width="100%" height="100%" fill="url(#geo)"/>
     </svg>
-
-    <!-- Rotating Guñelve (Mapuche 8-pointed star) -->
     <div class="splash-star">
-      <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M28 2 L31 22 L48 8 L34 25 L54 28 L34 31 L48 48 L31 34 L28 54 L25 34 L8 48 L22 31 L2 28 L22 25 L8 8 L25 22 Z"
-              fill="none" stroke="#C4883B" stroke-width="1.2" stroke-linejoin="round"/>
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <path d="M28 2 L31 22 L48 8 L34 25 L54 28 L34 31 L48 48 L31 34 L28 54 L25 34 L8 48 L22 31 L2 28 L22 25 L8 8 L25 22 Z" fill="none" stroke="#C4883B" stroke-width="1.2" stroke-linejoin="round"/>
         <circle cx="28" cy="28" r="5" fill="none" stroke="#C4883B" stroke-width="1"/>
         <circle cx="28" cy="28" r="2" fill="#C4883B"/>
       </svg>
     </div>
-
-    <!-- Shield / Logo -->
     <div class="splash-shield">
-      <div class="shield-inner">
-        99
-        <span>CPEM</span>
-      </div>
+      <div class="shield-inner">99<span>CPEM</span></div>
     </div>
-
-    <!-- Institution name -->
     <div class="splash-institution">CPEM N° 99</div>
     <div class="splash-location">Paso Aguerre · Neuquén</div>
-
-    <!-- Quote -->
     <div class="splash-quote-wrap">
       <span class="splash-quote-mark">"</span>
       <p class="splash-quote">El respeto por la cultura es la verdadera educación y camino</p>
       <span class="splash-quote-line"></span>
     </div>
-
-    <!-- Progress loader -->
     <div class="splash-loader"></div>
   </div>
 
-
-  <!-- ════════════════════════════════
-       HOME SCREEN
-  ═══════════════════════════════════ -->
   <div class="screen hidden" id="home">
-
-    <!-- ─── Header ─── -->
     <div class="home-header">
-      <svg class="home-header geo-bg" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.06;pointer-events:none;">
+      <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.06;pointer-events:none;">
         <defs>
           <pattern id="geo2" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
             <polygon points="30,2 58,30 30,58 2,30" fill="none" stroke="#F5EFE0" stroke-width="0.7"/>
@@ -754,14 +188,11 @@
         </defs>
         <rect width="100%" height="100%" fill="url(#geo2)"/>
       </svg>
-
       <div class="header-top">
         <div class="header-logo-wrap">
           <div class="header-logo-circle">
-            <!-- Mini Guñelve -->
-            <svg width="28" height="28" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z"
-                    fill="none" stroke="#C4883B" stroke-width="1.5" stroke-linejoin="round"/>
+            <svg width="28" height="28" viewBox="0 0 56 56" fill="none">
+              <path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z" fill="none" stroke="#C4883B" stroke-width="1.5" stroke-linejoin="round"/>
               <circle cx="28" cy="28" r="4" fill="#C4883B"/>
             </svg>
           </div>
@@ -778,24 +209,19 @@
           <div class="bell-dot"></div>
         </div>
       </div>
-
-      <!-- Greeting -->
       <div class="header-greeting">
         <div class="greeting-line1">Mari mari — buenos días, peñi / lamgen</div>
         <div class="greeting-line2">¿Qué vas a aprender hoy?</div>
       </div>
     </div>
 
-    <!-- ─── Body ─── -->
     <div class="home-body">
 
-      <!-- Install prompt card -->
       <div class="install-card hidden" id="install-card">
         <div class="install-card-top">
           <div class="install-card-icon">
             <svg width="26" height="26" viewBox="0 0 56 56" fill="none">
-              <path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z"
-                    fill="none" stroke="#C4883B" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z" fill="none" stroke="#C4883B" stroke-width="2" stroke-linejoin="round"/>
               <circle cx="28" cy="28" r="5" fill="#C4883B"/>
             </svg>
           </div>
@@ -803,7 +229,7 @@
             <div class="install-card-title">Instalar la app en tu celular</div>
             <div class="install-card-sub">Accedé sin internet desde cualquier lugar, sin necesidad de señal.</div>
           </div>
-          <button class="install-card-close" id="btn-close-install" aria-label="Cerrar">×</button>
+          <button class="install-card-close" id="btn-close-install">×</button>
         </div>
         <div class="install-card-btns">
           <button class="btn-install" id="btn-install-pwa">
@@ -814,13 +240,11 @@
         </div>
       </div>
 
-      <!-- Offline indicator -->
       <div class="offline-badge">
         <span class="offline-dot"></span>
         Disponible sin internet
       </div>
 
-      <!-- Banner -->
       <div class="section-label">Destacado</div>
       <div class="banner-card">
         <svg class="banner-card-bg" width="130" height="130" viewBox="0 0 56 56" fill="none">
@@ -836,91 +260,61 @@
         </div>
       </div>
 
-      <!-- Modules -->
       <div class="section-label">Módulos</div>
       <div class="modules-grid">
         <div class="module-card mc-red">
           <div class="module-badge">3 nuevo</div>
-          <div class="module-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A04530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
-            </svg>
-          </div>
+          <div class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A04530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
           <div class="module-title">Lengua y Literatura</div>
           <div class="module-sub">8 actividades</div>
         </div>
-
         <div class="module-card mc-ocre">
-          <div class="module-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4883B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-            </svg>
-          </div>
+          <div class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4883B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
           <div class="module-title">Ciencias Sociales</div>
           <div class="module-sub">6 actividades</div>
         </div>
-
         <div class="module-card mc-turq">
-          <div class="module-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2E8080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-          </div>
+          <div class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2E8080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
           <div class="module-title">Cultura e Identidad</div>
           <div class="module-sub">5 actividades</div>
         </div>
-
         <div class="module-card mc-earth">
-          <div class="module-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5C2E1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-            </svg>
-          </div>
+          <div class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5C2E1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
           <div class="module-title">Territorio y Comunidades</div>
           <div class="module-sub">4 actividades</div>
         </div>
       </div>
 
-      <!-- Recent -->
       <div class="section-label">Reciente</div>
       <div class="activity-list">
         <div class="activity-item">
-          <div class="activity-dot ad-red">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A04530" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          </div>
+          <div class="activity-dot ad-red"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A04530" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
           <div class="activity-text">
             <div class="activity-title">La esquila: práctica y saber ancestral</div>
             <div class="activity-sub">Ciencias Sociales · Módulo 2</div>
           </div>
           <div class="activity-arrow">›</div>
         </div>
-
         <div class="activity-item">
-          <div class="activity-dot ad-turq">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E8080" stroke-width="1.8" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg>
-          </div>
+          <div class="activity-dot ad-turq"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E8080" stroke-width="1.8" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg></div>
           <div class="activity-text">
-            <div class="activity-title">Palabras en Mapuzungún</div>
-            <div class="activity-sub">Lengua · Mapuzugún · Audio offline</div>
+            <div class="activity-title">Palabras en Mapuzugún</div>
+            <div class="activity-sub">Lengua · Audio disponible offline</div>
           </div>
           <div class="activity-arrow">›</div>
         </div>
-
         <div class="activity-item">
-          <div class="activity-dot ad-ocre">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C4883B" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-          </div>
+          <div class="activity-dot ad-ocre"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C4883B" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
           <div class="activity-text">
-            <div class="activity-title">Picún Leufú: territorio, río y comunidades</div>
-            <div class="activity-sub">Territorio · Territorio mapuche · Paso Aguerre</div>
+            <div class="activity-title">Territorio mapuche · Paso Aguerre</div>
+            <div class="activity-sub">Territorio · Mapa y comunidades</div>
           </div>
           <div class="activity-arrow">›</div>
         </div>
       </div>
 
-    </div><!-- end home-body -->
+    </div>
 
-    <!-- ─── Bottom Nav ─── -->
     <div class="bottom-nav">
       <div class="nav-item active">
         <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A04530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
@@ -939,132 +333,84 @@
         <span class="nav-label">Mi perfil</span>
       </div>
     </div>
-
-  </div><!-- end home screen -->
-</div><!-- end app-frame -->
+  </div>
+</div>
 
 <script>
-  // Auto-transition splash → home after 3.6s
+  // Transición splash → home
   setTimeout(() => {
-    const splash = document.getElementById('splash');
-    const home   = document.getElementById('home');
-    splash.classList.add('hidden');
-    home.classList.remove('hidden');
+    document.getElementById('splash').classList.add('hidden');
+    document.getElementById('home').classList.remove('hidden');
   }, 3600);
-
-  // Tap splash to skip
   document.getElementById('splash').addEventListener('click', () => {
     document.getElementById('splash').classList.add('hidden');
     document.getElementById('home').classList.remove('hidden');
   });
 
-  // Bottom nav tab switching
+  // Nav tabs
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', () => {
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       item.classList.add('active');
     });
   });
-</script>
-</body>
-</html>
 
-<script>
-  // ── INSTALL PROMPT ──────────────────────────
+  // Install prompt
   let deferredPrompt = null;
   const installCard = document.getElementById('install-card');
-  const btnInstall  = document.getElementById('btn-install-pwa');
-  const btnClose    = document.getElementById('btn-close-install');
-  const btnLater    = document.getElementById('btn-later-install');
+  const dismissed   = localStorage.getItem('installDismissed');
+  const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
 
-  // Solo mostrar si nunca fue instalada ni descartada
-  const dismissed = localStorage.getItem('installDismissed');
-  const installed = window.matchMedia('(display-mode: standalone)').matches;
+  if (!isInstalled) {
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (!dismissed) {
+        setTimeout(() => installCard.classList.remove('hidden'), 600);
+      }
+    });
+  }
 
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    // Mostrar la tarjeta solo si el usuario no la descartó antes
-    if (!dismissed && !installed) {
-      // Pequeño delay para que aparezca después de la transición splash→home
-      setTimeout(() => installCard.classList.remove('hidden'), 600);
-    }
-  });
-
-  btnInstall.addEventListener('click', async () => {
+  document.getElementById('btn-install-pwa').addEventListener('click', async () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       deferredPrompt = null;
       installCard.classList.add('hidden');
-      if (outcome === 'accepted') {
-        localStorage.setItem('installDismissed', 'true');
-      }
+      localStorage.setItem('installDismissed', 'true');
     } else {
-      // Fallback para iOS o browsers sin beforeinstallprompt
-      installCard.innerHTML = `
-        <div style="color:#F5EFE0;font-size:13px;line-height:1.6;padding:4px 0">
-          <strong style="display:block;margin-bottom:6px;color:#C4883B">Para instalar en iOS:</strong>
-          Tocá el ícono de compartir <span style="font-size:15px">⎙</span> en Safari → "Añadir a pantalla de inicio"
-          <button onclick="document.getElementById('install-card').classList.add('hidden');localStorage.setItem('installDismissed','true')"
-            style="display:block;margin-top:12px;width:100%;background:rgba(255,255,255,0.1);color:#C4883B;border:1px solid rgba(196,136,59,0.3);border-radius:8px;padding:8px;font-size:12px;cursor:pointer">
-            Entendido
-          </button>
-        </div>`;
+      installCard.innerHTML = '<div style="color:#F5EFE0;font-size:13px;line-height:1.6;padding:4px 0"><strong style="display:block;margin-bottom:6px;color:#C4883B">Para instalar en iPhone:</strong>Tocá el ícono de compartir en Safari → "Añadir a pantalla de inicio"<button onclick="document.getElementById(\'install-card\').classList.add(\'hidden\');localStorage.setItem(\'installDismissed\',\'true\')" style="display:block;margin-top:12px;width:100%;background:rgba(255,255,255,0.1);color:#C4883B;border:1px solid rgba(196,136,59,0.3);border-radius:8px;padding:8px;font-size:12px;cursor:pointer">Entendido</button></div>';
     }
   });
 
-  const dismissInstall = () => {
+  const dismiss = () => {
     installCard.classList.add('hidden');
     localStorage.setItem('installDismissed', 'true');
   };
-  btnClose.addEventListener('click', dismissInstall);
-  btnLater.addEventListener('click', dismissInstall);
+  document.getElementById('btn-close-install').addEventListener('click', dismiss);
+  document.getElementById('btn-later-install').addEventListener('click', dismiss);
 
-  // Si ya está instalada como app, ocultar la tarjeta siempre
-  if (installed) installCard.classList.add('hidden');
-
-  // Registro del Service Worker
+  // Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', async () => {
       try {
         const reg = await navigator.serviceWorker.register('./sw.js', { scope: '/CPEM-99/' });
-        console.log('[PWA] Service Worker registrado:', reg.scope);
-
-        // Registrar Periodic Background Sync si está disponible (Android/Chrome)
+        console.log('[PWA] SW registrado:', reg.scope);
         if ('periodicSync' in reg) {
-          try {
-            await reg.periodicSync.register('periodic-content-update', {
-              minInterval: 24 * 60 * 60 * 1000 // cada 24 horas
-            });
-            console.log('[PWA] Periodic sync registrado');
-          } catch (e) {
-            console.log('[PWA] Periodic sync no disponible en este dispositivo');
-          }
+          await reg.periodicSync.register('periodic-content-update', { minInterval: 24 * 60 * 60 * 1000 }).catch(() => {});
         }
-
-        // Escuchar actualizaciones disponibles
         reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              console.log('[PWA] Nueva versión disponible — se aplicará al reabrir');
+          reg.installing.addEventListener('statechange', () => {
+            if (reg.installing?.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('[PWA] Nueva versión lista');
             }
           });
         });
-
-      } catch (error) {
-        console.log('[PWA] Error al registrar SW:', error);
+      } catch (e) {
+        console.log('[PWA] Error SW:', e);
       }
     });
   }
-
-  // Capturar evento de instalación para Android
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    // Podés mostrar un botón "Instalar app" si querés
-    console.log('[PWA] App lista para instalar');
-  });
 </script>
+</body>
+</html>
