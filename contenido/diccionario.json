@@ -1,0 +1,58 @@
+{
+  "version": "1.0",
+  "ultima_actualizacion": "2024-03-24",
+  "categorias": [
+    {
+      "id": "saludos",
+      "nombre": "Saludos y Cortesía",
+      "color": "ocre",
+      "palabras": [
+        {"es": "Hola", "mapu": "Mari mari", "pron": "ma-ri ma-ri"},
+        {"es": "Buenos días", "mapu": "Mari mari antü", "pron": "ma-ri ma-ri an-tü"},
+        {"es": "Buenas noches", "mapu": "Mari mari püllay", "pron": "ma-ri ma-ri pü-llay"},
+        {"es": "Adiós", "mapu": "Pewkayal", "pron": "pew-kay-yal"},
+        {"es": "Gracias", "mapu": "Chaltu may", "pron": "chal-tu may"},
+        {"es": "Sí", "mapu": "May", "pron": "may"},
+        {"es": "No", "mapu": "Nay", "pron": "nay"}
+      ]
+    },
+    {
+      "id": "familia",
+      "nombre": "Familia",
+      "color": "terracota",
+      "palabras": [
+        {"es": "Madre", "mapu": "Ñuke", "pron": "ñu-ke"},
+        {"es": "Padre", "mapu": "Chaw", "pron": "chaw"},
+        {"es": "Abuela", "mapu": "Kuku", "pron": "ku-ku"},
+        {"es": "Hermano", "mapu": "Ká", "pron": "ka"},
+        {"es": "Hermana", "mapu": "Lamngen", "pron": "lam-ngen"},
+        {"es": "Familia", "mapu": "Lof", "pron": "lof"}
+      ]
+    },
+    {
+      "id": "escuela",
+      "nombre": "La Escuela",
+      "color": "turquoise",
+      "palabras": [
+        {"es": "Escuela", "mapu": "Kimche", "pron": "kim-che"},
+        {"es": "Maestro/a", "mapu": "Kimchefe", "pron": "kim-che-fe"},
+        {"es": "Estudiante", "mapu": "Kimchewe", "pron": "kim-che-we"},
+        {"es": "Libro", "mapu": "Wülngiñ", "pron": "wül-ngiñ"},
+        {"es": "Aprender", "mapu": "Kimen", "pron": "ki-men"}
+      ]
+    },
+    {
+      "id": "naturaleza",
+      "nombre": "Naturaleza",
+      "color": "earth",
+      "palabras": [
+        {"es": "Agua", "mapu": "Ko", "pron": "ko"},
+        {"es": "Tierra", "mapu": "Mapu", "pron": "ma-pu"},
+        {"es": "Sol", "mapu": "Antü", "pron": "an-tü"},
+        {"es": "Luna", "mapu": "Küyen", "pron": "kü-yen"},
+        {"es": "Fuego", "mapu": "Kütral", "pron": "kü-tral"},
+        {"es": "Viento", "mapu": "Püllay", "pron": "pü-llay"}
+      ]
+    }
+  ]
+}
