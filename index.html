@@ -144,7 +144,7 @@
       gap: 12px;
       width: 100%;
       padding: 16px 20px;
-      margin: 8px 0 22px 0;
+      margin: 8px 0 12px 0;
       background: linear-gradient(135deg, var(--turquoise) 0%, #1E5E5E 100%);
       color: #fff;
       border: none;
@@ -214,6 +214,70 @@
       font-size: 12px;
       opacity: 0.95;
       font-weight: 600;
+    }
+
+    /* INDICADOR DE ALMACENAMIENTO - Paso 3 */
+    .storage-indicator {
+      background: rgba(46, 128, 128, 0.08);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(46, 128, 128, 0.15);
+    }
+    
+    .storage-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--earth);
+      font-weight: 600;
+    }
+    
+    .storage-numbers {
+      font-family: 'Nunito', sans-serif;
+      font-size: 11px;
+      color: #666;
+    }
+    
+    .storage-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: rgba(46, 128, 128, 0.15);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    .storage-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.5s ease, background-color 0.3s ease;
+      background: var(--turquoise);
+    }
+    
+    .storage-bar-fill.low {
+      background: #4CAF50; /* Verde */
+    }
+    
+    .storage-bar-fill.medium {
+      background: var(--ocre); /* Naranja */
+    }
+    
+    .storage-bar-fill.high {
+      background: var(--terracota); /* Rojo */
+    }
+    
+    .storage-warning {
+      font-size: 11px;
+      color: var(--terracota);
+      margin-top: 6px;
+      display: none;
+      font-weight: 600;
+    }
+    
+    .storage-warning.visible {
+      display: block;
     }
   </style>
 </head>
@@ -337,6 +401,20 @@
         <span class="sync-text">Buscar actualizaciones de contenido</span>
         <span class="sync-status"></span>
       </button>
+
+      <!-- INDICADOR DE ALMACENAMIENTO - PASO 3 -->
+      <div class="storage-indicator" id="storage-indicator">
+        <div class="storage-header">
+          <span>💾 Almacenamiento usado</span>
+          <span class="storage-numbers" id="storage-text">-- MB de 150 MB</span>
+        </div>
+        <div class="storage-bar-bg">
+          <div class="storage-bar-fill" id="storage-bar" style="width: 0%"></div>
+        </div>
+        <div class="storage-warning" id="storage-warning">
+          ⚠️ Espacio casi lleno. Se borrarán archivos viejos automáticamente.
+        </div>
+      </div>
 
       <div class="section-label">Destacado</div>
       <div class="banner-card">
@@ -506,6 +584,21 @@
       try {
         const reg = await navigator.serviceWorker.register('./sw.js', { scope: '/CPEM-99/' });
         console.log('[PWA] SW registrado:', reg.scope);
+        
+        // Escuchar mensajes del SW (actualizaciones de almacenamiento)
+        navigator.serviceWorker.addEventListener('message', event => {
+          if (event.data && event.data.type === 'STORAGE_STATUS') {
+            actualizarIndicadorAlmacenamiento(event.data);
+          }
+        });
+        
+        // Pedir estado inicial de almacenamiento
+        setTimeout(() => {
+          if (reg.active) {
+            reg.active.postMessage({ type: 'GET_STORAGE_STATUS' });
+          }
+        }, 1000);
+        
         if ('periodicSync' in reg) {
           await reg.periodicSync.register('periodic-content-update', { minInterval: 24 * 60 * 60 * 1000 }).catch(() => {});
         }
@@ -572,6 +665,14 @@
       btn.classList.add('exito');
       statusSpan.textContent = '¡Listo! Contenido actualizado';
       
+      // Actualizar indicador de almacenamiento después de sincronizar
+      setTimeout(() => {
+        const reg = navigator.serviceWorker.ready;
+        reg.then(r => {
+          if (r.active) r.active.postMessage({ type: 'GET_STORAGE_STATUS' });
+        });
+      }, 500);
+      
       setTimeout(() => {
         btn.classList.remove('exito');
         btn.disabled = false;
@@ -589,6 +690,31 @@
         btn.disabled = false;
         statusSpan.textContent = '';
       }, 3000);
+    }
+  }
+
+  // ACTUALIZAR INDICADOR DE ALMACENAMIENTO - PASO 3
+  function actualizarIndicadorAlmacenamiento(data) {
+    const storageText = document.getElementById('storage-text');
+    const storageBar = document.getElementById('storage-bar');
+    const storageWarning = document.getElementById('storage-warning');
+    
+    const usado = parseFloat(data.usadoMB);
+    const maximo = data.maximoMB;
+    const porcentaje = data.porcentaje;
+    
+    storageText.textContent = `${usado} MB de ${maximo} MB`;
+    storageBar.style.width = `${porcentaje}%`;
+    
+    // Color según porcentaje
+    storageBar.classList.remove('low', 'medium', 'high');
+    if (porcentaje < 70) {
+      storageBar.classList.add('low');
+    } else if (porcentaje < 90) {
+      storageBar.classList.add('medium');
+    } else {
+      storageBar.classList.add('high');
+      storageWarning.classList.add('visible');
     }
   }
 </script>
