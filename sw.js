@@ -1,13 +1,13 @@
 // ─────────────────────────────────────────────
 //  CPEM N° 99 — Service Worker
 //  Estrategia: Cache First + Background Update
-//  Paso 3: Gestión inteligente de almacenamiento
+//  Paso 3: Gestión inteligente de almacenamiento + Diccionario offline
 // ─────────────────────────────────────────────
 
-const APP_VERSION   = 'v1.1.0';
+const APP_VERSION   = 'v1.2.0'; // Incrementada por el diccionario
 const CACHE_SHELL   = `cpem99-shell-${APP_VERSION}`;
 const CACHE_CONTENT = `cpem99-content-${APP_VERSION}`;
-const MAX_CACHE_MB  = 150; // Límite máximo en MB para contenido educativo
+const MAX_CACHE_MB  = 150;
 
 // Archivos del shell — se cachean en la instalación y nunca expiran
 const SHELL_FILES = [
@@ -19,8 +19,11 @@ const SHELL_FILES = [
 ];
 
 // Archivos de contenido — se cachean al primer acceso y se actualizan en background
+// AGREGADO: diccionario.html y diccionario.json para funcionamiento offline
 const CONTENT_PREFETCH = [
   '/CPEM-99/historia.html',
+  '/diccionario.html',                    // ← NUEVO: Página del diccionario
+  '/contenido/diccionario.json',          // ← NUEVO: Datos del diccionario
   '/contenido/modulos.json',
   '/contenido/lengua.json',
   '/contenido/ciencias-sociales.json',
@@ -64,23 +67,20 @@ async function limpiarCacheViejo(espacioNecesarioMB = 20) {
   
   if (keys.length === 0) return;
   
-  // Obtener metadata de último acceso (simulado con timestamp actual si no existe)
   const archivosConFecha = [];
   for (const request of keys) {
     const response = await cache.match(request);
-    // Usar header Date o asumir que los más viejos son los primeros en el caché
     const fecha = response.headers.get('date') 
       ? new Date(response.headers.get('date')).getTime() 
-      : Date.now() - (keys.indexOf(request) * 86400000); // Fallback: asumir orden de ingreso
+      : Date.now() - (keys.indexOf(request) * 86400000);
     
     archivosConFecha.push({ request, fecha, cache });
   }
   
-  // Ordenar por fecha (más viejos primero)
   archivosConFecha.sort((a, b) => a.fecha - b.fecha);
   
   let liberadoMB = 0;
-  const maxLiberar = archivosConFecha.length > 5 ? 5 : archivosConFecha.length; // Borrar máximo 5 archivos por vez
+  const maxLiberar = archivosConFecha.length > 5 ? 5 : archivosConFecha.length;
   
   for (let i = 0; i < maxLiberar && liberadoMB < espacioNecesarioMB; i++) {
     const item = archivosConFecha[i];
@@ -131,16 +131,22 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
 
+  // Shell files → Cache First estricto
   if (isShellFile(url.pathname)) {
     event.respondWith(cacheFirst(event.request));
     return;
   }
 
-  if (url.pathname.startsWith('/contenido/') || url.pathname.startsWith('/media/')) {
+  // Archivos de contenido JSON/multimedia → Stale While Revalidate
+  // AGREGADO: incluye diccionario.json y diccionario.html
+  if (url.pathname.startsWith('/contenido/') || 
+      url.pathname.startsWith('/media/') ||
+      url.pathname === '/diccionario.html') {
     event.respondWith(staleWhileRevalidate(event.request));
     return;
   }
 
+  // Todo lo demás → Network First con fallback al caché
   event.respondWith(networkFirstWithFallback(event.request));
 });
 
@@ -267,7 +273,7 @@ async function syncNewContent(force = false) {
   const stats = await getCacheSize();
   if (parseFloat(stats.mb) > MAX_CACHE_MB) {
     console.log(`[SW] Caché lleno (${stats.mb} MB). Limpiando archivos viejos...`);
-    const liberado = await limpiarCacheViejo(30); // Intentar liberar 30MB
+    const liberado = await limpiarCacheViejo(30);
     if (liberado === 0) {
       console.warn('[SW] No se pudo liberar espacio. Cancelando sincronización.');
       return { status: 'error', razon: 'sin_espacio' };
