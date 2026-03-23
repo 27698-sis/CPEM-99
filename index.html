@@ -130,7 +130,7 @@
 
     /* Bottom nav */
     .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 420px; background: #fff; border-top: 1px solid rgba(160,69,48,0.1); display: flex; align-items: center; justify-content: space-around; padding: 10px 10px 18px; z-index: 100; box-shadow: 0 -4px 20px rgba(59,31,20,0.08); }
-    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 14px; border-radius: 12px; transition: background 0.15s; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 14px; border-radius: 12px; transition: background 0.15s; text-decoration: none; color: inherit; }
     .nav-item.active { background: rgba(160,69,48,0.08); }
     .nav-icon { opacity: 0.45; }
     .nav-item.active .nav-icon { opacity: 1; }
@@ -257,15 +257,15 @@
     }
     
     .storage-bar-fill.low {
-      background: #4CAF50; /* Verde */
+      background: #4CAF50;
     }
     
     .storage-bar-fill.medium {
-      background: var(--ocre); /* Naranja */
+      background: var(--ocre);
     }
     
     .storage-bar-fill.high {
-      background: var(--terracota); /* Rojo */
+      background: var(--terracota);
     }
     
     .storage-warning {
@@ -450,6 +450,14 @@
 
       <div class="section-label">Módulos</div>
       <div class="modules-grid">
+        <!-- TARJETA DEL DICCIONARIO - AGREGADA -->
+        <div class="module-card mc-turq" onclick="location.href='diccionario.html'">
+          <div class="module-badge">Nuevo</div>
+          <div class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2E8080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4 8 4v14M8 21v-5a2 2 0 012-2h4a2 2 0 012 2v5"/></svg></div>
+          <div class="module-title">Diccionario</div>
+          <div class="module-sub">Español ↔ Mapuzungun</div>
+        </div>
+
         <div class="module-card mc-red">
           <div class="module-badge">3 nuevo</div>
           <div class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A04530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
