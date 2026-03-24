@@ -2,9 +2,10 @@
 //  CPEM N° 99 — Service Worker
 //  Estrategia: Cache First + Background Update
 //  Paso 3: Gestión inteligente de almacenamiento + Diccionario offline
+//  v1.2.1 — FIX: prefetch de contenido en install + rutas staleWhileRevalidate
 // ─────────────────────────────────────────────
 
-const APP_VERSION   = 'v1.2.0'; // Incrementada por el diccionario
+const APP_VERSION   = 'v1.2.1'; // Incrementada por corrección offline
 const CACHE_SHELL   = `cpem99-shell-${APP_VERSION}`;
 const CACHE_CONTENT = `cpem99-content-${APP_VERSION}`;
 const MAX_CACHE_MB  = 150;
@@ -18,12 +19,12 @@ const SHELL_FILES = [
   '/icons/icon-512.png'
 ];
 
-// Archivos de contenido — se cachean al primer acceso y se actualizan en background
-// AGREGADO: diccionario.html y diccionario.json para funcionamiento offline
+// Archivos de contenido — se pre-cachean en install Y se actualizan en background
+// FIX v1.2.1: estos archivos ahora se descargan durante la instalación
 const CONTENT_PREFETCH = [
   '/CPEM-99/historia.html',
-  '/diccionario.html',                    // ← NUEVO: Página del diccionario
-  '/contenido/diccionario.json',          // ← NUEVO: Datos del diccionario
+  '/diccionario.html',
+  '/contenido/diccionario.json',
   '/contenido/modulos.json',
   '/contenido/lengua.json',
   '/contenido/ciencias-sociales.json',
@@ -45,7 +46,7 @@ async function getCacheSize() {
   const cache = await caches.open(CACHE_CONTENT);
   const keys = await cache.keys();
   let totalBytes = 0;
-  
+
   for (const request of keys) {
     const response = await cache.match(request);
     if (response) {
@@ -53,7 +54,7 @@ async function getCacheSize() {
       totalBytes += blob.size;
     }
   }
-  
+
   return {
     bytes: totalBytes,
     mb: (totalBytes / (1024 * 1024)).toFixed(1),
@@ -64,24 +65,24 @@ async function getCacheSize() {
 async function limpiarCacheViejo(espacioNecesarioMB = 20) {
   const cache = await caches.open(CACHE_CONTENT);
   const keys = await cache.keys();
-  
-  if (keys.length === 0) return;
-  
+
+  if (keys.length === 0) return 0;
+
   const archivosConFecha = [];
   for (const request of keys) {
     const response = await cache.match(request);
-    const fecha = response.headers.get('date') 
-      ? new Date(response.headers.get('date')).getTime() 
+    const fecha = response.headers.get('date')
+      ? new Date(response.headers.get('date')).getTime()
       : Date.now() - (keys.indexOf(request) * 86400000);
-    
-    archivosConFecha.push({ request, fecha, cache });
+
+    archivosConFecha.push({ request, fecha });
   }
-  
+
   archivosConFecha.sort((a, b) => a.fecha - b.fecha);
-  
+
   let liberadoMB = 0;
-  const maxLiberar = archivosConFecha.length > 5 ? 5 : archivosConFecha.length;
-  
+  const maxLiberar = Math.min(archivosConFecha.length, 5);
+
   for (let i = 0; i < maxLiberar && liberadoMB < espacioNecesarioMB; i++) {
     const item = archivosConFecha[i];
     const response = await cache.match(item.request);
@@ -93,16 +94,37 @@ async function limpiarCacheViejo(espacioNecesarioMB = 20) {
       console.log(`[SW] Eliminado archivo viejo: ${item.request.url} (${mb.toFixed(1)} MB)`);
     }
   }
-  
+
   return liberadoMB;
 }
 
 // ─── INSTALACIÓN ───────────────────────────────
+// FIX v1.2.1: se pre-cachea TAMBIÉN el contenido durante la instalación.
+// Los archivos de contenido se descargan con Promise.allSettled para que
+// un fallo individual no cancele toda la instalación.
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_SHELL).then(cache => {
-      return cache.addAll(SHELL_FILES);
-    }).then(() => {
+    Promise.all([
+      // Shell: obligatorio — si falla, el SW no se instala
+      caches.open(CACHE_SHELL).then(cache => cache.addAll(SHELL_FILES)),
+
+      // Contenido: opcional — fallas individuales no bloquean la instalación
+      caches.open(CACHE_CONTENT).then(cache =>
+        Promise.allSettled(
+          CONTENT_PREFETCH.map(url =>
+            fetch(url)
+              .then(res => {
+                if (res.ok) {
+                  cache.put(url, res);
+                  console.log(`[SW] Pre-cacheado en install: ${url}`);
+                }
+              })
+              .catch(err => console.warn(`[SW] No se pudo pre-cachear ${url}: ${err.message}`))
+          )
+        )
+      )
+    ]).then(() => {
+      console.log('[SW] Instalación completa — shell y contenido cacheados');
       return self.skipWaiting();
     })
   );
@@ -127,6 +149,7 @@ self.addEventListener('activate', event => {
 });
 
 // ─── ESTRATEGIA DE FETCH ────────────────────────
+// FIX v1.2.1: se agregó /CPEM-99/ al bloque staleWhileRevalidate
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
@@ -137,11 +160,14 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Archivos de contenido JSON/multimedia → Stale While Revalidate
-  // AGREGADO: incluye diccionario.json y diccionario.html
-  if (url.pathname.startsWith('/contenido/') || 
-      url.pathname.startsWith('/media/') ||
-      url.pathname === '/diccionario.html') {
+  // Archivos de contenido JSON/HTML/multimedia → Stale While Revalidate
+  // FIX: se agrega /CPEM-99/ para capturar historia.html y futuros archivos
+  if (
+    url.pathname.startsWith('/contenido/') ||
+    url.pathname.startsWith('/media/')     ||
+    url.pathname.startsWith('/CPEM-99/')   ||
+    url.pathname === '/diccionario.html'
+  ) {
     event.respondWith(staleWhileRevalidate(event.request));
     return;
   }
@@ -169,12 +195,12 @@ self.addEventListener('push', event => {
   const data = event.data ? event.data.json() : {};
   const title   = data.title   || 'CPEM N° 99 — Nuevo contenido';
   const options = {
-    body:    data.body    || 'Hay nuevo material disponible para descargar.',
-    icon:    '/icons/icon-192.png',
-    badge:   '/icons/icon-192.png',
-    tag:     'nuevo-contenido',
+    body:     data.body    || 'Hay nuevo material disponible para descargar.',
+    icon:     '/icons/icon-192.png',
+    badge:    '/icons/icon-192.png',
+    tag:      'nuevo-contenido',
     renotify: false,
-    data:    { url: data.url || '/' }
+    data:     { url: data.url || '/' }
   };
   event.waitUntil(self.registration.showNotification(title, options));
 });
@@ -198,13 +224,13 @@ self.addEventListener('message', event => {
       })
     );
   }
-  
+
   // Paso 3: Reportar estado de almacenamiento
   if (event.data && event.data.type === 'GET_STORAGE_STATUS') {
     event.waitUntil(
       getCacheSize().then(stats => {
-        event.source.postMessage({ 
-          type: 'STORAGE_STATUS', 
+        event.source.postMessage({
+          type: 'STORAGE_STATUS',
           usadoMB: stats.mb,
           archivos: stats.archivos,
           maximoMB: MAX_CACHE_MB,
@@ -268,7 +294,7 @@ async function syncNewContent(force = false) {
     console.log('[SW] Sincronización pospuesta: protegiendo datos móviles');
     return { status: 'pospuesto', razon: 'datos' };
   }
-  
+
   // Paso 3: Verificar espacio disponible antes de descargar
   const stats = await getCacheSize();
   if (parseFloat(stats.mb) > MAX_CACHE_MB) {
@@ -279,7 +305,7 @@ async function syncNewContent(force = false) {
       return { status: 'error', razon: 'sin_espacio' };
     }
   }
-  
+
   const cache = await caches.open(CACHE_CONTENT);
   const updates = await Promise.allSettled(
     CONTENT_PREFETCH.map(async url => {
@@ -294,11 +320,11 @@ async function syncNewContent(force = false) {
       }
     })
   );
-  
+
   // Reportar nuevo estado de almacenamiento a todas las pestañas
   const nuevasStats = await getCacheSize();
-  const clients = await self.clients.matchAll();
-  clients.forEach(client => {
+  const allClients = await self.clients.matchAll();
+  allClients.forEach(client => {
     client.postMessage({
       type: 'STORAGE_STATUS',
       usadoMB: nuevasStats.mb,
@@ -307,7 +333,7 @@ async function syncNewContent(force = false) {
       porcentaje: Math.round((parseFloat(nuevasStats.mb) / MAX_CACHE_MB) * 100)
     });
   });
-  
+
   return updates;
 }
 
