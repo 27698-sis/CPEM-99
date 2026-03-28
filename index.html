@@ -18,7 +18,7 @@
       --earth:      #3B1F14;
       --earth-mid:  #5C2E1A;
       --terracota:  #A04530;
-      --ocre:       #C4883B;
+      --ocre:        #C4883B;
       --ocre-light: #E8BA75;
       --turquoise:  #2E8080;
       --turq-light: #5FAEAE;
@@ -163,9 +163,6 @@
     .storage-warning { font-size: 11px; color: var(--terracota); margin-top: 6px; display: none; font-weight: 600; }
     .storage-warning.visible { display: block; }
 
-    /* ── FIX v1.2.1: OVERLAY DE ACTUALIZACIÓN AUTOMÁTICA ──────────────
-       Se muestra solo cuando el SW detecta una versión nueva y recarga.
-       El usuario ve un mensaje breve y claro, sin tener que hacer nada. */
     #overlay-actualizando {
       display: none;
       position: fixed;
@@ -199,9 +196,6 @@
 </head>
 <body>
 
-<!-- ── FIX v1.2.1: OVERLAY ACTUALIZACIÓN AUTOMÁTICA ───────────────────
-     Visible solo durante el instante en que el SW nuevo se activa
-     y la página se recarga. El usuario no necesita hacer nada. -->
 <div id="overlay-actualizando">
   <svg class="overlay-spinner" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C4883B" stroke-width="2" stroke-linecap="round">
     <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
@@ -438,268 +432,38 @@
 
     </div>
 
+    <footer style="margin-top: 20px; padding: 40px 20px 120px; background: var(--cream-dark); text-align: center; border-top: 2px solid var(--ocre);">
+        <div style="margin-bottom: 15px; opacity: 0.6;">
+            <svg width="40" height="40" viewBox="0 0 56 56" fill="none">
+                <path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z" fill="none" stroke="#3B1F14" stroke-width="1.5"/>
+            </svg>
+        </div>
+        <p style="font-family: 'Cinzel', serif; font-weight: 700; color: var(--earth); font-size: 14px; letter-spacing: 1px;">CPEM N° 99 — PASO AGUERRE</p>
+        <p style="font-size: 12px; color: var(--earth-mid); margin: 5px 0;">Desarrollo: <strong>[Victor Gastón Mendez]</strong></p>
+        
+        <button onclick="document.getElementById('legal-info').style.display='block'; this.style.display='none'" 
+                style="background: var(--earth); color: var(--cream); border: none; padding: 8px 16px; border-radius: 6px; font-size: 11px; margin-top: 10px; cursor: pointer; font-family: 'Nunito', sans-serif;">
+            Información Legal
+        </button>
+
+        <div id="legal-info" style="display:none; margin-top: 15px; text-align: left; font-size: 11px; color: var(--earth); background: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px; line-height: 1.4;">
+            <p><strong>© 2026 [Victor Gastón Mendez].</strong> Propiedad Privada.</p>
+            <p>Este software es una herramienta pedagógica desarrollada exclusivamente para el CPEM N° 99. Queda prohibida su reproducción o modificación sin consentimiento del autor.</p>
+            <p style="text-align:center; margin-top:10px; text-decoration:underline; cursor:pointer; font-weight:bold;" onclick="this.parentElement.style.display='none'; document.querySelector('button[onclick*=\"legal-info\"]').style.display='inline-block'">Cerrar</p>
+        </div>
+    </footer>
+
     <div class="bottom-nav">
       <div class="nav-item active">
         <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A04530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
         <span class="nav-label">Inicio</span>
       </div>
       <div class="nav-item">
-        <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A8070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A8070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
         <span class="nav-label">Módulos</span>
       </div>
-      <div class="nav-item">
-        <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A8070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <span class="nav-label">Cultura</span>
-      </div>
-      <div class="nav-item">
-        <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A8070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span class="nav-label">Mi perfil</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  // ── Transición splash → home ──────────────────────────────────────────
-  setTimeout(() => {
-    document.getElementById('splash').classList.add('hidden');
-    document.getElementById('home').classList.remove('hidden');
-  }, 3600);
-  document.getElementById('splash').addEventListener('click', () => {
-    document.getElementById('splash').classList.add('hidden');
-    document.getElementById('home').classList.remove('hidden');
-  });
-
-  // ── Nav tabs ──────────────────────────────────────────────────────────
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', () => {
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      item.classList.add('active');
-    });
-  });
-
-  // ── Install prompt ────────────────────────────────────────────────────
-  let deferredPrompt = null;
-  const installCard = document.getElementById('install-card');
-  const dismissed   = localStorage.getItem('installDismissed');
-  const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
-
-  if (!isInstalled) {
-    window.addEventListener('beforeinstallprompt', e => {
-      e.preventDefault();
-      deferredPrompt = e;
-      if (!dismissed) {
-        setTimeout(() => installCard.classList.remove('hidden'), 600);
-      }
-    });
-  }
-
-  document.getElementById('btn-install-pwa').addEventListener('click', async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      deferredPrompt = null;
-      installCard.classList.add('hidden');
-      localStorage.setItem('installDismissed', 'true');
-    } else {
-      installCard.innerHTML = '<div style="color:#F5EFE0;font-size:13px;line-height:1.6;padding:4px 0"><strong style="display:block;margin-bottom:6px;color:#C4883B">Para instalar en iPhone:</strong>Tocá el ícono de compartir en Safari → "Añadir a pantalla de inicio"<button onclick="document.getElementById(\'install-card\').classList.add(\'hidden\');localStorage.setItem(\'installDismissed\',\'true\')" style="display:block;margin-top:12px;width:100%;background:rgba(255,255,255,0.1);color:#C4883B;border:1px solid rgba(196,136,59,0.3);border-radius:8px;padding:8px;font-size:12px;cursor:pointer">Entendido</button></div>';
-    }
-  });
-
-  const dismiss = () => {
-    installCard.classList.add('hidden');
-    localStorage.setItem('installDismissed', 'true');
-  };
-  document.getElementById('btn-close-install').addEventListener('click', dismiss);
-  document.getElementById('btn-later-install').addEventListener('click', dismiss);
-
-  // ════════════════════════════════════════════════════════════════════════
-  //  SERVICE WORKER — FIX v1.2.1
-  //
-  //  Cambios respecto a la versión anterior:
-  //  1. updatefound ahora ACTÚA: muestra overlay y recarga la página
-  //     cuando el SW nuevo pasa a 'activated' (antes solo logueaba).
-  //  2. Se escucha 'statechange' en el worker nuevo correctamente.
-  //  3. El usuario ve "Actualizando la app..." y la página se recarga sola.
-  //     No necesita saber nada ni hacer nada.
-  // ════════════════════════════════════════════════════════════════════════
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', async () => {
-      try {
-        const reg = await navigator.serviceWorker.register('./sw.js', { scope: '/CPEM-99/' });
-        console.log('[PWA] SW registrado:', reg.scope);
-
-        // Escuchar mensajes del SW (estado de almacenamiento)
-        navigator.serviceWorker.addEventListener('message', event => {
-          if (event.data && event.data.type === 'STORAGE_STATUS') {
-            actualizarIndicadorAlmacenamiento(event.data);
-          }
-        });
-
-        // Pedir estado inicial de almacenamiento
-        setTimeout(() => {
-          if (reg.active) reg.active.postMessage({ type: 'GET_STORAGE_STATUS' });
-        }, 1000);
-
-        // Sincronización periódica (si el navegador lo soporta)
-        if ('periodicSync' in reg) {
-          await reg.periodicSync.register('periodic-content-update', {
-            minInterval: 24 * 60 * 60 * 1000
-          }).catch(() => {});
-        }
-
-        // ── AUTO-UPDATE: detectar nueva versión y recargar silenciosamente ──
-        // Cuando GitHub Pages sirve un sw.js actualizado, el navegador lo
-        // detecta solo. Este código muestra el overlay y recarga la app
-        // sin que el usuario tenga que hacer absolutamente nada.
-        reg.addEventListener('updatefound', () => {
-          const nuevoSW = reg.installing;
-          if (!nuevoSW) return;
-
-          nuevoSW.addEventListener('statechange', () => {
-            // 'activated' = el nuevo SW ya tomó el control
-            if (nuevoSW.state === 'activated') {
-              mostrarOverlayActualizando();
-              // Breve pausa para que el usuario lea el mensaje, luego recarga
-              setTimeout(() => window.location.reload(), 1800);
-            }
-          });
-        });
-
-      } catch (e) {
-        console.log('[PWA] Error SW:', e);
-      }
-    });
-  }
-
-  // Muestra el overlay de "Actualizando app..." durante la recarga automática
-  function mostrarOverlayActualizando() {
-    document.getElementById('overlay-actualizando').classList.add('visible');
-  }
-
-  // ── Actualización manual (botón "Buscar actualizaciones") ─────────────
-  async function actualizarContenido() {
-    const btn = document.getElementById('btn-actualizar');
-    const statusSpan = btn.querySelector('.sync-status');
-
-    if (!navigator.onLine) {
-      btn.classList.add('error');
-      statusSpan.textContent = 'Sin señal';
-      setTimeout(() => { btn.classList.remove('error'); statusSpan.textContent = ''; }, 3000);
-      return;
-    }
-
-    btn.disabled = true;
-    btn.classList.add('cargando');
-    statusSpan.textContent = 'Descargando...';
-
-    try {
-      const registration = await navigator.serviceWorker.ready;
-      const messageChannel = new MessageChannel();
-
-      await new Promise((resolve, reject) => {
-        messageChannel.port1.onmessage = (event) => {
-          if (event.data.type === 'SYNC_COMPLETE') resolve('ok');
-          else if (event.data.type === 'SYNC_ERROR') reject(new Error(event.data.error));
-        };
-        registration.active.postMessage({ type: 'FORCE_SYNC' }, [messageChannel.port2]);
-        setTimeout(() => reject(new Error('timeout')), 30000);
-      });
-
-      btn.classList.remove('cargando');
-      btn.classList.add('exito');
-      statusSpan.textContent = '¡Listo! Contenido actualizado';
-
-      setTimeout(() => {
-        navigator.serviceWorker.ready.then(r => {
-          if (r.active) r.active.postMessage({ type: 'GET_STORAGE_STATUS' });
-        });
-      }, 500);
-
-      setTimeout(() => {
-        btn.classList.remove('exito');
-        btn.disabled = false;
-        statusSpan.textContent = '';
-      }, 4000);
-
-    } catch (error) {
-      console.error('Error al actualizar:', error);
-      btn.classList.remove('cargando');
-      btn.classList.add('error');
-      statusSpan.textContent = 'Error al descargar';
-      setTimeout(() => {
-        btn.classList.remove('error');
-        btn.disabled = false;
-        statusSpan.textContent = '';
-      }, 3000);
-    }
-  }
-
-  // ── Indicador de almacenamiento ───────────────────────────────────────
-  function actualizarIndicadorAlmacenamiento(data) {
-    const storageText    = document.getElementById('storage-text');
-    const storageBar     = document.getElementById('storage-bar');
-    const storageWarning = document.getElementById('storage-warning');
-
-    const usado      = parseFloat(data.usadoMB);
-    const maximo     = data.maximoMB;
-    const porcentaje = data.porcentaje;
-
-    storageText.textContent = `${usado} MB de ${maximo} MB`;
-    storageBar.style.width  = `${porcentaje}%`;
-
-    storageBar.classList.remove('low', 'medium', 'high');
-    if (porcentaje < 70)      storageBar.classList.add('low');
-    else if (porcentaje < 90) storageBar.classList.add('medium');
-    else {
-      storageBar.classList.add('high');
-      storageWarning.classList.add('visible');
-    }
-  }
-</script>
-  <footer style="margin-top: 50px; padding: 30px 20px; border-top: 1px solid #eaeaea; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; color: #444;">
-    
-    <div style="margin-bottom: 10px;">
-        <img src="icon-192.png" alt="Logo Institucional" style="width: 40px; height: 40px; opacity: 0.7; filter: grayscale(100%);">
     </div>
 
-    <p style="margin: 5px 0; font-weight: bold; font-size: 1.1em; color: #2c3e50;">
-        CPEM N° 99 - Paso Aguerre- Neuquen
-    </p>
-
-    <p style="margin: 5px 0; font-size: 0.9em; color: #666;">
-        Desarrollo y Coordinación: <strong>[Victor Gastón Mendez]</strong>
-    </p>
-
-    <div style="margin-top: 15px;">
-        <button onclick="document.getElementById('legal-info').style.display='block'; this.style.display='none'" 
-                id="btn-ver-mas"
-                style="background: #e0e0e0; border: none; padding: 8px 15px; border-radius: 20px; font-size: 0.8em; cursor: pointer; color: #555;">
-            Ver Información de Licencia
-        </button>
-    </div>
-
-    <div id="legal-info" style="display: none; max-width: 600px; margin: 20px auto; padding: 15px; background: #fff; border: 1px dashed #ccc; border-radius: 8px; text-align: left; font-size: 0.85em; line-height: 1.5; color: #555;">
-        <h4 style="margin-top: 0; color: #2c3e50; border-bottom: 1px solid #eee; padding-bottom: 5px;">Aviso Legal y Propiedad Intelectual</h4>
-        <p>
-            © 2026 <strong>[Victor Gastón Mendez]</strong>. Todos los derechos reservados.
-        </p>
-        <p>
-            Este software es una <strong>herramienta de gestión institucional privada</strong>. El código fuente, diseño y lógica de datos son propiedad exclusiva del autor. 
-            Se prohíbe cualquier modificación, copia o redistribución sin autorización previa. 
-            El software se entrega "TAL CUAL", sin garantías de funcionamiento para fines externos a la <strong>CPEM N° 99</strong>.
-        </p>
-        <div style="text-align: center; margin-top: 10px;">
-            <button onclick="document.getElementById('legal-info').style.display='none'; document.getElementById('btn-ver-mas').style.display='inline-block'"
-                    style="background: none; border: none; color: #3498db; text-decoration: underline; cursor: pointer; font-size: 0.9em;">
-                Ocultar detalles
-            </button>
-        </div>
-    </div>
-
-    <p style="margin-top: 25px; font-size: 0.75em; color: #999; letter-spacing: 1px;">
-        VERSIÓN 2026 | PROYECTO CPEM N° 99 
-    </p>
-</footer>
+  </div> </div> <script src="app.js"></script>
 </body>
 </html>
