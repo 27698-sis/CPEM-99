@@ -5,7 +5,7 @@
 //  v1.2.1 — FIX: prefetch de contenido en install + rutas staleWhileRevalidate
 // ─────────────────────────────────────────────
 
-const APP_VERSION   = 'v1.2.1'; // Incrementada por corrección offline
+const APP_VERSION   = 'v1.2.2'; // Actualizado para incluir Footer y Licencia
 const CACHE_SHELL   = `cpem99-shell-${APP_VERSION}`;
 const CACHE_CONTENT = `cpem99-content-${APP_VERSION}`;
 const MAX_CACHE_MB  = 150;
