@@ -657,5 +657,49 @@
     }
   }
 </script>
+  <footer style="margin-top: 50px; padding: 30px 20px; border-top: 1px solid #eaeaea; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; color: #444;">
+    
+    <div style="margin-bottom: 10px;">
+        <img src="icon-192.png" alt="Logo Institucional" style="width: 40px; height: 40px; opacity: 0.7; filter: grayscale(100%);">
+    </div>
+
+    <p style="margin: 5px 0; font-weight: bold; font-size: 1.1em; color: #2c3e50;">
+        ESRN N° 11 - Villa Regina
+    </p>
+
+    <p style="margin: 5px 0; font-size: 0.9em; color: #666;">
+        Desarrollo y Coordinación: <strong>[Tu Nombre Completo]</strong>
+    </p>
+
+    <div style="margin-top: 15px;">
+        <button onclick="document.getElementById('legal-info').style.display='block'; this.style.display='none'" 
+                id="btn-ver-mas"
+                style="background: #e0e0e0; border: none; padding: 8px 15px; border-radius: 20px; font-size: 0.8em; cursor: pointer; color: #555;">
+            Ver Información de Licencia
+        </button>
+    </div>
+
+    <div id="legal-info" style="display: none; max-width: 600px; margin: 20px auto; padding: 15px; background: #fff; border: 1px dashed #ccc; border-radius: 8px; text-align: left; font-size: 0.85em; line-height: 1.5; color: #555;">
+        <h4 style="margin-top: 0; color: #2c3e50; border-bottom: 1px solid #eee; padding-bottom: 5px;">Aviso Legal y Propiedad Intelectual</h4>
+        <p>
+            © 2026 <strong>[Tu Nombre Completo]</strong>. Todos los derechos reservados.
+        </p>
+        <p>
+            Este software es una <strong>herramienta de gestión institucional privada</strong>. El código fuente, diseño y lógica de datos son propiedad exclusiva del autor. 
+            Se prohíbe cualquier modificación, copia o redistribución sin autorización previa. 
+            El software se entrega "TAL CUAL", sin garantías de funcionamiento para fines externos a la <strong>ESRN N° 11</strong>.
+        </p>
+        <div style="text-align: center; margin-top: 10px;">
+            <button onclick="document.getElementById('legal-info').style.display='none'; document.getElementById('btn-ver-mas').style.display='inline-block'"
+                    style="background: none; border: none; color: #3498db; text-decoration: underline; cursor: pointer; font-size: 0.9em;">
+                Ocultar detalles
+            </button>
+        </div>
+    </div>
+
+    <p style="margin-top: 25px; font-size: 0.75em; color: #999; letter-spacing: 1px;">
+        VERSIÓN 2026 | PROYECTO TPSE-5-2
+    </p>
+</footer>
 </body>
 </html>
