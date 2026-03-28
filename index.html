@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
   <title>CPEM N° 99 — Paso Aguerre</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,7 +18,7 @@
       --earth:      #3B1F14;
       --earth-mid:  #5C2E1A;
       --terracota:  #A04530;
-      --ocre:        #C4883B;
+      --ocre:       #C4883B;
       --ocre-light: #E8BA75;
       --turquoise:  #2E8080;
       --turq-light: #5FAEAE;
@@ -32,8 +32,6 @@
     .geo-pattern { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.08; pointer-events: none; }
     .screen { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity 0.9s ease, transform 0.9s ease; }
     .screen.hidden { opacity: 0; pointer-events: none; transform: scale(1.04); }
-
-    /* SPLASH */
     #splash { background: linear-gradient(170deg, #3B1F14 0%, #5C2E1A 45%, #2E4040 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 32px; text-align: center; }
     .splash-star { margin-bottom: 28px; animation: star-spin 24s linear infinite; }
     @keyframes star-spin { to { transform: rotate(360deg); } }
@@ -50,8 +48,6 @@
     .splash-loader { position: absolute; bottom: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, var(--turquoise), var(--ocre)); border-radius: 0 2px 2px 0; animation: load-bar 3s ease forwards; }
     @keyframes load-bar { 0% { width: 0%; } 70% { width: 85%; } 95% { width: 97%; } 100% { width: 100%; } }
     @keyframes fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* HOME */
     #home { background: #F2EBD9; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
     #home::-webkit-scrollbar { display: none; }
     .home-header { background: linear-gradient(155deg, #3B1F14 0%, #5C2E1A 55%, #2E4040 100%); padding: 52px 24px 24px; position: relative; overflow: hidden; flex-shrink: 0; }
@@ -70,8 +66,6 @@
     .home-body { padding: 22px 18px 90px; flex: 1; }
     .section-label { font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--terracota); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
     .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(160,69,48,0.3), transparent); }
-
-    /* Install card */
     .install-card { background: linear-gradient(135deg, #3B1F14 0%, #5C2E1A 100%); border-radius: 16px; padding: 18px 18px 16px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; border: 1px solid rgba(196,136,59,0.3); }
     .install-card.hidden { display: none; }
     .install-card-top { display: flex; align-items: center; gap: 12px; }
@@ -83,16 +77,12 @@
     .install-card-btns { display: flex; gap: 10px; }
     .btn-install { flex: 1; background: var(--ocre); color: var(--earth); border: none; border-radius: 10px; padding: 10px 16px; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
     .btn-later { background: rgba(255,255,255,0.08); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 14px; font-family: 'Nunito', sans-serif; font-size: 12px; cursor: pointer; white-space: nowrap; }
-
-    /* Banner */
     .banner-card { background: linear-gradient(135deg, var(--turquoise) 0%, #1E5E5E 100%); border-radius: 16px; padding: 20px; margin-bottom: 22px; position: relative; overflow: hidden; cursor: pointer; transition: transform 0.18s ease; }
     .banner-card:active { transform: scale(0.98); }
     .banner-card-bg { position: absolute; right: -10px; top: -10px; opacity: 0.1; pointer-events: none; }
     .banner-tag { display: inline-block; background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.9); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; font-weight: 600; }
     .banner-title { font-family: 'Lora', serif; font-size: 17px; font-weight: 500; color: #fff; line-height: 1.4; margin-bottom: 12px; }
     .banner-cta { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.15); color: #fff; font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 20px; }
-
-    /* Modules */
     .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
     .module-card { background: #fff; border-radius: 14px; padding: 18px 16px; cursor: pointer; transition: transform 0.15s ease; border: 1px solid rgba(160,69,48,0.1); box-shadow: 0 2px 8px rgba(59,31,20,0.07); position: relative; overflow: hidden; }
     .module-card:active { transform: scale(0.97); }
@@ -109,8 +99,6 @@
     .module-title { font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 700; color: var(--earth); line-height: 1.3; margin-bottom: 4px; }
     .module-sub { font-size: 11px; color: #9A8070; line-height: 1.3; }
     .module-badge { position: absolute; top: 12px; right: 12px; background: var(--terracota); color: #fff; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
-
-    /* Activity */
     .activity-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
     .activity-item { background: #fff; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; box-shadow: 0 1px 5px rgba(59,31,20,0.06); border: 1px solid rgba(160,69,48,0.08); transition: transform 0.15s; }
     .activity-item:active { transform: scale(0.98); }
@@ -122,13 +110,9 @@
     .activity-title { font-size: 13px; font-weight: 600; color: var(--earth); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .activity-sub { font-size: 11px; color: #9A8070; margin-top: 2px; }
     .activity-arrow { color: #C4A882; font-size: 16px; flex-shrink: 0; }
-
-    /* Offline badge */
     .offline-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(46,128,128,0.12); color: var(--turquoise); font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.5px; margin-bottom: 18px; }
     .offline-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--turquoise); animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(0.8); } }
-
-    /* Bottom nav */
     .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 420px; background: #fff; border-top: 1px solid rgba(160,69,48,0.1); display: flex; align-items: center; justify-content: space-around; padding: 10px 10px 18px; z-index: 100; box-shadow: 0 -4px 20px rgba(59,31,20,0.08); }
     .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 14px; border-radius: 12px; transition: background 0.15s; text-decoration: none; color: inherit; }
     .nav-item.active { background: rgba(160,69,48,0.08); }
@@ -136,105 +120,59 @@
     .nav-item.active .nav-icon { opacity: 1; }
     .nav-label { font-size: 10px; font-weight: 600; letter-spacing: 0.3px; color: #9A8070; }
     .nav-item.active .nav-label { color: var(--terracota); }
-
-    /* BOTÓN DE SINCRONIZACIÓN */
-    .sync-button { display: flex; align-items: center; gap: 12px; width: 100%; padding: 16px 20px; margin: 8px 0 12px 0; background: linear-gradient(135deg, var(--turquoise) 0%, #1E5E5E 100%); color: #fff; border: none; border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(46, 128, 128, 0.25); transition: all 0.3s ease; position: relative; overflow: hidden; }
-    .sync-button:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(46, 128, 128, 0.35); }
-    .sync-button:active { transform: translateY(0); }
-    .sync-button:disabled { background: #9E9E9E; cursor: not-allowed; box-shadow: none; transform: none; }
+    .sync-button { display: flex; align-items: center; gap: 12px; width: 100%; padding: 16px 20px; margin: 8px 0 12px 0; background: linear-gradient(135deg, var(--turquoise) 0%, #1E5E5E 100%); color: #fff; border: none; border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(46,128,128,0.25); transition: all 0.3s ease; }
+    .sync-button:disabled { background: #9E9E9E; cursor: not-allowed; box-shadow: none; }
     .sync-button.cargando { background: linear-gradient(135deg, var(--ocre) 0%, var(--terracota) 100%); }
-    .sync-button.exito { background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%); }
-    .sync-button.error { background: linear-gradient(135deg, var(--terracota) 0%, #8B2E1F 100%); }
+    .sync-button.exito    { background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%); }
+    .sync-button.error    { background: linear-gradient(135deg, var(--terracota) 0%, #8B2E1F 100%); }
     .sync-icon { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; flex-shrink: 0; }
     .sync-button.cargando .sync-icon { animation: spin 1s linear infinite; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     .sync-text { flex: 1; text-align: left; }
     .sync-status { font-size: 12px; opacity: 0.95; font-weight: 600; }
-
-    /* INDICADOR DE ALMACENAMIENTO */
-    .storage-indicator { background: rgba(46, 128, 128, 0.08); border-radius: 10px; padding: 12px 16px; margin-bottom: 22px; border: 1px solid rgba(46, 128, 128, 0.15); }
+    .storage-indicator { background: rgba(46,128,128,0.08); border-radius: 10px; padding: 12px 16px; margin-bottom: 22px; border: 1px solid rgba(46,128,128,0.15); }
     .storage-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 12px; color: var(--earth); font-weight: 600; }
-    .storage-numbers { font-family: 'Nunito', sans-serif; font-size: 11px; color: #666; }
-    .storage-bar-bg { width: 100%; height: 6px; background: rgba(46, 128, 128, 0.15); border-radius: 3px; overflow: hidden; }
-    .storage-bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease, background-color 0.3s ease; background: var(--turquoise); }
+    .storage-numbers { font-size: 11px; color: #666; }
+    .storage-bar-bg { width: 100%; height: 6px; background: rgba(46,128,128,0.15); border-radius: 3px; overflow: hidden; }
+    .storage-bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; background: var(--turquoise); }
     .storage-bar-fill.low    { background: #4CAF50; }
     .storage-bar-fill.medium { background: var(--ocre); }
     .storage-bar-fill.high   { background: var(--terracota); }
     .storage-warning { font-size: 11px; color: var(--terracota); margin-top: 6px; display: none; font-weight: 600; }
     .storage-warning.visible { display: block; }
-
-    #overlay-actualizando {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(59, 31, 20, 0.95);
-      z-index: 9999;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 18px;
-      text-align: center;
-      padding: 32px;
-    }
+    #overlay-actualizando { display: none; position: fixed; inset: 0; background: rgba(59,31,20,0.95); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; padding: 32px; }
     #overlay-actualizando.visible { display: flex; }
-    .overlay-spinner {
-      animation: spin 1s linear infinite;
-    }
-    .overlay-titulo {
-      font-family: 'Cinzel', serif;
-      font-size: 16px;
-      color: var(--ocre);
-      letter-spacing: 1px;
-    }
-    .overlay-subtitulo {
-      font-family: 'Nunito', sans-serif;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
+    .overlay-spinner { animation: spin 1s linear infinite; }
+    .overlay-titulo { font-family: 'Cinzel', serif; font-size: 16px; color: var(--ocre); letter-spacing: 1px; }
+    .overlay-subtitulo { font-family: 'Nunito', sans-serif; font-size: 13px; color: var(--text-muted); line-height: 1.5; }
   </style>
 </head>
 <body>
 
 <div id="overlay-actualizando">
   <svg class="overlay-spinner" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C4883B" stroke-width="2" stroke-linecap="round">
-    <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-    <path d="M3 3v5h5"/>
-    <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
-    <path d="M16 21h5v-5"/>
+    <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+    <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/>
   </svg>
   <div class="overlay-titulo">Actualizando la app</div>
   <div class="overlay-subtitulo">Hay contenido nuevo disponible.<br>Solo tarda un momento…</div>
 </div>
 
 <div class="app-frame">
-
   <div class="screen" id="splash">
     <svg class="geo-pattern" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="geo" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-          <polygon points="30,2 58,30 30,58 2,30" fill="none" stroke="#F5EFE0" stroke-width="0.8"/>
-          <polygon points="30,12 48,30 30,48 12,30" fill="none" stroke="#C4883B" stroke-width="0.6"/>
-          <line x1="30" y1="16" x2="30" y2="44" stroke="#F5EFE0" stroke-width="0.4"/>
-          <line x1="16" y1="30" x2="44" y2="30" stroke="#F5EFE0" stroke-width="0.4"/>
-          <circle cx="30" cy="2"  r="1.5" fill="#C4883B"/>
-          <circle cx="58" cy="30" r="1.5" fill="#C4883B"/>
-          <circle cx="30" cy="58" r="1.5" fill="#C4883B"/>
-          <circle cx="2"  cy="30" r="1.5" fill="#C4883B"/>
-        </pattern>
-      </defs>
+      <defs><pattern id="geo" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+        <polygon points="30,2 58,30 30,58 2,30" fill="none" stroke="#F5EFE0" stroke-width="0.8"/>
+        <polygon points="30,12 48,30 30,48 12,30" fill="none" stroke="#C4883B" stroke-width="0.6"/>
+        <line x1="30" y1="16" x2="30" y2="44" stroke="#F5EFE0" stroke-width="0.4"/>
+        <line x1="16" y1="30" x2="44" y2="30" stroke="#F5EFE0" stroke-width="0.4"/>
+        <circle cx="30" cy="2" r="1.5" fill="#C4883B"/><circle cx="58" cy="30" r="1.5" fill="#C4883B"/>
+        <circle cx="30" cy="58" r="1.5" fill="#C4883B"/><circle cx="2" cy="30" r="1.5" fill="#C4883B"/>
+      </pattern></defs>
       <rect width="100%" height="100%" fill="url(#geo)"/>
     </svg>
-    <div class="splash-star">
-      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-        <path d="M28 2 L31 22 L48 8 L34 25 L54 28 L34 31 L48 48 L31 34 L28 54 L25 34 L8 48 L22 31 L2 28 L22 25 L8 8 L25 22 Z" fill="none" stroke="#C4883B" stroke-width="1.2" stroke-linejoin="round"/>
-        <circle cx="28" cy="28" r="5" fill="none" stroke="#C4883B" stroke-width="1"/>
-        <circle cx="28" cy="28" r="2" fill="#C4883B"/>
-      </svg>
-    </div>
-    <div class="splash-shield">
-      <div class="shield-inner">99<span>CPEM</span></div>
-    </div>
+    <div class="splash-star"><svg width="56" height="56" viewBox="0 0 56 56" fill="none"><path d="M28 2 L31 22 L48 8 L34 25 L54 28 L34 31 L48 48 L31 34 L28 54 L25 34 L8 48 L22 31 L2 28 L22 25 L8 8 L25 22 Z" fill="none" stroke="#C4883B" stroke-width="1.2" stroke-linejoin="round"/><circle cx="28" cy="28" r="5" fill="none" stroke="#C4883B" stroke-width="1"/><circle cx="28" cy="28" r="2" fill="#C4883B"/></svg></div>
+    <div class="splash-shield"><div class="shield-inner">99<span>CPEM</span></div></div>
     <div class="splash-institution">CPEM N° 99</div>
     <div class="splash-location">Paso Aguerre · Neuquén</div>
     <div class="splash-quote-wrap">
@@ -247,35 +185,17 @@
 
   <div class="screen hidden" id="home">
     <div class="home-header">
-      <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.06;pointer-events:none;">
-        <defs>
-          <pattern id="geo2" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-            <polygon points="30,2 58,30 30,58 2,30" fill="none" stroke="#F5EFE0" stroke-width="0.7"/>
-            <polygon points="30,14 46,30 30,46 14,30" fill="none" stroke="#C4883B" stroke-width="0.5"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#geo2)"/>
-      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.06;pointer-events:none;"><defs><pattern id="geo2" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse"><polygon points="30,2 58,30 30,58 2,30" fill="none" stroke="#F5EFE0" stroke-width="0.7"/><polygon points="30,14 46,30 30,46 14,30" fill="none" stroke="#C4883B" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#geo2)"/></svg>
       <div class="header-top">
         <div class="header-logo-wrap">
-          <div class="header-logo-circle">
-            <svg width="28" height="28" viewBox="0 0 56 56" fill="none">
-              <path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z" fill="none" stroke="#C4883B" stroke-width="1.5" stroke-linejoin="round"/>
-              <circle cx="28" cy="28" r="4" fill="#C4883B"/>
-            </svg>
-          </div>
+          <div class="header-logo-circle"><svg width="28" height="28" viewBox="0 0 56 56" fill="none"><path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z" fill="none" stroke="#C4883B" stroke-width="1.5" stroke-linejoin="round"/><circle cx="28" cy="28" r="4" fill="#C4883B"/></svg></div>
           <div class="header-title-block">
             <span class="header-cpem">CPEM N°</span>
             <span class="header-name">99 — Paso Aguerre</span>
             <span class="header-location">Paso Aguerre · Neuquén</span>
           </div>
         </div>
-        <div class="header-bell">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/>
-          </svg>
-          <div class="bell-dot"></div>
-        </div>
+        <div class="header-bell"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="bell-dot"></div></div>
       </div>
       <div class="header-greeting">
         <div class="greeting-line1">Mari mari — buenos días, peñi / lamgen</div>
@@ -284,15 +204,9 @@
     </div>
 
     <div class="home-body">
-
       <div class="install-card hidden" id="install-card">
         <div class="install-card-top">
-          <div class="install-card-icon">
-            <svg width="26" height="26" viewBox="0 0 56 56" fill="none">
-              <path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z" fill="none" stroke="#C4883B" stroke-width="2" stroke-linejoin="round"/>
-              <circle cx="28" cy="28" r="5" fill="#C4883B"/>
-            </svg>
-          </div>
+          <div class="install-card-icon"><svg width="26" height="26" viewBox="0 0 56 56" fill="none"><path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z" fill="none" stroke="#C4883B" stroke-width="2" stroke-linejoin="round"/><circle cx="28" cy="28" r="5" fill="#C4883B"/></svg></div>
           <div class="install-card-text">
             <div class="install-card-title">Instalar la app en tu celular</div>
             <div class="install-card-sub">Accedé sin internet desde cualquier lugar, sin necesidad de señal.</div>
@@ -300,73 +214,38 @@
           <button class="install-card-close" id="btn-close-install">×</button>
         </div>
         <div class="install-card-btns">
-          <button class="btn-install" id="btn-install-pwa">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Instalar app gratis
-          </button>
+          <button class="btn-install" id="btn-install-pwa"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Instalar app gratis</button>
           <button class="btn-later" id="btn-later-install">Más tarde</button>
         </div>
       </div>
 
-      <div class="offline-badge">
-        <span class="offline-dot"></span>
-        Disponible sin internet
-      </div>
+      <div class="offline-badge"><span class="offline-dot"></span>Disponible sin internet</div>
 
       <button id="btn-actualizar" class="sync-button" onclick="actualizarContenido()">
-        <span class="sync-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-            <path d="M3 3v5h5"/>
-            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
-            <path d="M16 21h5v-5"/>
-          </svg>
-        </span>
+        <span class="sync-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg></span>
         <span class="sync-text">Buscar actualizaciones de contenido</span>
         <span class="sync-status"></span>
       </button>
 
-      <div class="storage-indicator" id="storage-indicator">
-        <div class="storage-header">
-          <span>💾 Almacenamiento usado</span>
-          <span class="storage-numbers" id="storage-text">-- MB de 150 MB</span>
-        </div>
-        <div class="storage-bar-bg">
-          <div class="storage-bar-fill" id="storage-bar" style="width: 0%"></div>
-        </div>
-        <div class="storage-warning" id="storage-warning">
-          ⚠️ Espacio casi lleno. Se borrarán archivos viejos automáticamente.
-        </div>
+      <div class="storage-indicator">
+        <div class="storage-header"><span>💾 Almacenamiento usado</span><span class="storage-numbers" id="storage-text">-- MB de 150 MB</span></div>
+        <div class="storage-bar-bg"><div class="storage-bar-fill" id="storage-bar" style="width:0%"></div></div>
+        <div class="storage-warning" id="storage-warning">⚠️ Espacio casi lleno. Se borrarán archivos viejos automáticamente.</div>
       </div>
 
       <div class="section-label">Destacado</div>
       <div class="banner-card">
-        <svg class="banner-card-bg" width="130" height="130" viewBox="0 0 56 56" fill="none">
-          <polygon points="28,2 55,28 28,54 1,28" fill="none" stroke="#fff" stroke-width="1.2"/>
-          <polygon points="28,10 46,28 28,46 10,28" fill="none" stroke="#fff" stroke-width="0.8"/>
-          <circle cx="28" cy="28" r="6" fill="none" stroke="#fff" stroke-width="1"/>
-        </svg>
+        <svg class="banner-card-bg" width="130" height="130" viewBox="0 0 56 56" fill="none"><polygon points="28,2 55,28 28,54 1,28" fill="none" stroke="#fff" stroke-width="1.2"/><polygon points="28,10 46,28 28,46 10,28" fill="none" stroke="#fff" stroke-width="0.8"/><circle cx="28" cy="28" r="6" fill="none" stroke="#fff" stroke-width="1"/></svg>
         <div class="banner-tag">Nuevo contenido</div>
         <div class="banner-title">Saberes del Pueblo Mapuche<br>del Wajmapu Neuquino</div>
-        <div class="banner-cta">
-          Explorar
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
+        <div class="banner-cta">Explorar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
 
       <div class="section-label">Nuestra escuela</div>
       <a href="historia.html" style="text-decoration:none;display:block;margin-bottom:22px;">
         <div style="background:linear-gradient(135deg,#3B1F14 0%,#2E4040 100%);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:16px;border:1px solid rgba(196,136,59,0.25);">
-          <div style="width:46px;height:46px;border-radius:12px;background:rgba(196,136,59,0.12);border:1px solid rgba(196,136,59,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="24" height="24" viewBox="0 0 56 56" fill="none">
-              <path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z" fill="none" stroke="#C4883B" stroke-width="2.5" stroke-linejoin="round"/>
-              <circle cx="28" cy="28" r="5" fill="#C4883B"/>
-            </svg>
-          </div>
-          <div style="flex:1;min-width:0;">
-            <div style="font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;color:#F5EFE0;margin-bottom:3px;">Nuestra historia</div>
-            <div style="font-size:12px;color:#C4A882;line-height:1.4;">Cómo nació el CPEM 99 · Línea de tiempo</div>
-          </div>
+          <div style="width:46px;height:46px;border-radius:12px;background:rgba(196,136,59,0.12);border:1px solid rgba(196,136,59,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="24" height="24" viewBox="0 0 56 56" fill="none"><path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z" fill="none" stroke="#C4883B" stroke-width="2.5" stroke-linejoin="round"/><circle cx="28" cy="28" r="5" fill="#C4883B"/></svg></div>
+          <div style="flex:1;min-width:0;"><div style="font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;color:#F5EFE0;margin-bottom:3px;">Nuestra historia</div><div style="font-size:12px;color:#C4A882;line-height:1.4;">Cómo nació el CPEM 99 · Línea de tiempo</div></div>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
         </div>
       </a>
@@ -376,29 +255,24 @@
         <div class="module-card mc-turq" onclick="location.href='diccionario.html'">
           <div class="module-badge">Nuevo</div>
           <div class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2E8080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4 8 4v14M8 21v-5a2 2 0 012-2h4a2 2 0 012 2v5"/></svg></div>
-          <div class="module-title">Diccionario</div>
-          <div class="module-sub">Español ↔ Mapuzungun</div>
+          <div class="module-title">Diccionario</div><div class="module-sub">Español ↔ Mapuzungun</div>
         </div>
         <div class="module-card mc-red">
           <div class="module-badge">3 nuevo</div>
           <div class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A04530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
-          <div class="module-title">Lengua y Literatura</div>
-          <div class="module-sub">8 actividades</div>
+          <div class="module-title">Lengua y Literatura</div><div class="module-sub">8 actividades</div>
         </div>
         <div class="module-card mc-ocre">
           <div class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4883B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-          <div class="module-title">Ciencias Sociales</div>
-          <div class="module-sub">6 actividades</div>
+          <div class="module-title">Ciencias Sociales</div><div class="module-sub">6 actividades</div>
         </div>
         <div class="module-card mc-turq">
           <div class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2E8080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <div class="module-title">Cultura e Identidad</div>
-          <div class="module-sub">5 actividades</div>
+          <div class="module-title">Cultura e Identidad</div><div class="module-sub">5 actividades</div>
         </div>
         <div class="module-card mc-earth">
           <div class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5C2E1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-          <div class="module-title">Territorio y Comunidades</div>
-          <div class="module-sub">4 actividades</div>
+          <div class="module-title">Territorio y Comunidades</div><div class="module-sub">4 actividades</div>
         </div>
       </div>
 
@@ -406,64 +280,114 @@
       <div class="activity-list">
         <div class="activity-item">
           <div class="activity-dot ad-red"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A04530" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-          <div class="activity-text">
-            <div class="activity-title">La esquila: práctica y saber ancestral</div>
-            <div class="activity-sub">Ciencias Sociales · Módulo 2</div>
-          </div>
+          <div class="activity-text"><div class="activity-title">La esquila: práctica y saber ancestral</div><div class="activity-sub">Ciencias Sociales · Módulo 2</div></div>
           <div class="activity-arrow">›</div>
         </div>
         <div class="activity-item">
           <div class="activity-dot ad-turq"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E8080" stroke-width="1.8" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg></div>
-          <div class="activity-text">
-            <div class="activity-title">Palabras en Mapuzugún</div>
-            <div class="activity-sub">Lengua · Audio disponible offline</div>
-          </div>
+          <div class="activity-text"><div class="activity-title">Palabras en Mapuzugún</div><div class="activity-sub">Lengua · Audio disponible offline</div></div>
           <div class="activity-arrow">›</div>
         </div>
         <div class="activity-item">
           <div class="activity-dot ad-ocre"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C4883B" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-          <div class="activity-text">
-            <div class="activity-title">Territorio mapuche · Paso Aguerre</div>
-            <div class="activity-sub">Territorio · Mapa y comunidades</div>
-          </div>
+          <div class="activity-text"><div class="activity-title">Territorio mapuche · Paso Aguerre</div><div class="activity-sub">Territorio · Mapa y comunidades</div></div>
           <div class="activity-arrow">›</div>
         </div>
       </div>
-
     </div>
-
-    <footer style="margin-top: 20px; padding: 40px 20px 120px; background: var(--cream-dark); text-align: center; border-top: 2px solid var(--ocre);">
-        <div style="margin-bottom: 15px; opacity: 0.6;">
-            <svg width="40" height="40" viewBox="0 0 56 56" fill="none">
-                <path d="M28 4 L30.5 20 L44 12 L36 24 L52 28 L36 32 L44 44 L30.5 36 L28 52 L25.5 36 L12 44 L20 32 L4 28 L20 24 L12 12 L25.5 20 Z" fill="none" stroke="#3B1F14" stroke-width="1.5"/>
-            </svg>
-        </div>
-        <p style="font-family: 'Cinzel', serif; font-weight: 700; color: var(--earth); font-size: 14px; letter-spacing: 1px;">CPEM N° 99 — PASO AGUERRE</p>
-        <p style="font-size: 12px; color: var(--earth-mid); margin: 5px 0;">Desarrollo: <strong>[Victor Gastón Mendez]</strong></p>
-        
-        <button onclick="document.getElementById('legal-info').style.display='block'; this.style.display='none'" 
-                style="background: var(--earth); color: var(--cream); border: none; padding: 8px 16px; border-radius: 6px; font-size: 11px; margin-top: 10px; cursor: pointer; font-family: 'Nunito', sans-serif;">
-            Información Legal
-        </button>
-
-        <div id="legal-info" style="display:none; margin-top: 15px; text-align: left; font-size: 11px; color: var(--earth); background: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px; line-height: 1.4;">
-            <p><strong>© 2026 [Victor Gastón Mendez].</strong> Propiedad Privada.</p>
-            <p>Este software es una herramienta pedagógica desarrollada exclusivamente para el CPEM N° 99. Queda prohibida su reproducción o modificación sin consentimiento del autor.</p>
-            <p style="text-align:center; margin-top:10px; text-decoration:underline; cursor:pointer; font-weight:bold;" onclick="this.parentElement.style.display='none'; document.querySelector('button[onclick*=\"legal-info\"]').style.display='inline-block'">Cerrar</p>
-        </div>
-    </footer>
 
     <div class="bottom-nav">
-      <div class="nav-item active">
-        <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A04530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-        <span class="nav-label">Inicio</span>
-      </div>
-      <div class="nav-item">
-        <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A8070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
-        <span class="nav-label">Módulos</span>
-      </div>
+      <div class="nav-item active"><svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A04530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span class="nav-label">Inicio</span></div>
+      <div class="nav-item"><svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A8070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg><span class="nav-label">Módulos</span></div>
+      <div class="nav-item"><svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A8070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span class="nav-label">Cultura</span></div>
+      <div class="nav-item"><svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A8070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="nav-label">Mi perfil</span></div>
     </div>
+  </div>
+</div>
 
-  </div> </div> <script src="app.js"></script>
+<script>
+  setTimeout(() => { document.getElementById('splash').classList.add('hidden'); document.getElementById('home').classList.remove('hidden'); }, 3600);
+  document.getElementById('splash').addEventListener('click', () => { document.getElementById('splash').classList.add('hidden'); document.getElementById('home').classList.remove('hidden'); });
+  document.querySelectorAll('.nav-item').forEach(item => { item.addEventListener('click', () => { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); item.classList.add('active'); }); });
+
+  let deferredPrompt = null;
+  const installCard = document.getElementById('install-card');
+  const dismissed   = localStorage.getItem('installDismissed');
+  const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
+  if (!isInstalled) { window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; if (!dismissed) setTimeout(() => installCard.classList.remove('hidden'), 600); }); }
+  document.getElementById('btn-install-pwa').addEventListener('click', async () => {
+    if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; installCard.classList.add('hidden'); localStorage.setItem('installDismissed', 'true'); }
+    else { installCard.innerHTML = '<div style="color:#F5EFE0;font-size:13px;line-height:1.6;padding:4px 0"><strong style="display:block;margin-bottom:6px;color:#C4883B">Para instalar en iPhone:</strong>Tocá el ícono de compartir en Safari → "Añadir a pantalla de inicio"<button onclick="document.getElementById(\'install-card\').classList.add(\'hidden\');localStorage.setItem(\'installDismissed\',\'true\')" style="display:block;margin-top:12px;width:100%;background:rgba(255,255,255,0.1);color:#C4883B;border:1px solid rgba(196,136,59,0.3);border-radius:8px;padding:8px;font-size:12px;cursor:pointer">Entendido</button></div>'; }
+  });
+  const dismiss = () => { installCard.classList.add('hidden'); localStorage.setItem('installDismissed', 'true'); };
+  document.getElementById('btn-close-install').addEventListener('click', dismiss);
+  document.getElementById('btn-later-install').addEventListener('click', dismiss);
+
+  // ── SERVICE WORKER v1.2.2 ─────────────────────────────────────────────
+  // Scope y rutas corregidas para https://27698-sis.github.io/CPEM-99/
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', async () => {
+      try {
+        const reg = await navigator.serviceWorker.register('/CPEM-99/sw.js', { scope: '/CPEM-99/' });
+        console.log('[PWA] SW registrado OK — scope:', reg.scope);
+
+        navigator.serviceWorker.addEventListener('message', event => {
+          if (event.data?.type === 'STORAGE_STATUS') actualizarIndicadorAlmacenamiento(event.data);
+        });
+
+        setTimeout(() => { if (reg.active) reg.active.postMessage({ type: 'GET_STORAGE_STATUS' }); }, 1000);
+
+        if ('periodicSync' in reg) {
+          await reg.periodicSync.register('periodic-content-update', { minInterval: 24*60*60*1000 }).catch(() => {});
+        }
+
+        // Auto-update silencioso — el usuario no toca nada
+        reg.addEventListener('updatefound', () => {
+          const nuevoSW = reg.installing;
+          if (!nuevoSW) return;
+          nuevoSW.addEventListener('statechange', () => {
+            if (nuevoSW.state === 'activated') {
+              document.getElementById('overlay-actualizando').classList.add('visible');
+              setTimeout(() => window.location.reload(), 1800);
+            }
+          });
+        });
+
+      } catch (e) { console.log('[PWA] Error SW:', e); }
+    });
+  }
+
+  async function actualizarContenido() {
+    const btn = document.getElementById('btn-actualizar');
+    const statusSpan = btn.querySelector('.sync-status');
+    if (!navigator.onLine) { btn.classList.add('error'); statusSpan.textContent = 'Sin señal'; setTimeout(() => { btn.classList.remove('error'); statusSpan.textContent = ''; }, 3000); return; }
+    btn.disabled = true; btn.classList.add('cargando'); statusSpan.textContent = 'Descargando...';
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const messageChannel = new MessageChannel();
+      await new Promise((resolve, reject) => {
+        messageChannel.port1.onmessage = (event) => { if (event.data.type === 'SYNC_COMPLETE') resolve('ok'); else if (event.data.type === 'SYNC_ERROR') reject(new Error(event.data.error)); };
+        registration.active.postMessage({ type: 'FORCE_SYNC' }, [messageChannel.port2]);
+        setTimeout(() => reject(new Error('timeout')), 30000);
+      });
+      btn.classList.remove('cargando'); btn.classList.add('exito'); statusSpan.textContent = '¡Listo! Contenido actualizado';
+      setTimeout(() => { navigator.serviceWorker.ready.then(r => { if (r.active) r.active.postMessage({ type: 'GET_STORAGE_STATUS' }); }); }, 500);
+      setTimeout(() => { btn.classList.remove('exito'); btn.disabled = false; statusSpan.textContent = ''; }, 4000);
+    } catch (error) {
+      btn.classList.remove('cargando'); btn.classList.add('error'); statusSpan.textContent = 'Error al descargar';
+      setTimeout(() => { btn.classList.remove('error'); btn.disabled = false; statusSpan.textContent = ''; }, 3000);
+    }
+  }
+
+  function actualizarIndicadorAlmacenamiento(data) {
+    document.getElementById('storage-text').textContent = `${parseFloat(data.usadoMB)} MB de ${data.maximoMB} MB`;
+    const bar = document.getElementById('storage-bar');
+    bar.style.width = `${data.porcentaje}%`;
+    bar.classList.remove('low', 'medium', 'high');
+    if (data.porcentaje < 70) bar.classList.add('low');
+    else if (data.porcentaje < 90) bar.classList.add('medium');
+    else { bar.classList.add('high'); document.getElementById('storage-warning').classList.add('visible'); }
+  }
+</script>
 </body>
 </html>
